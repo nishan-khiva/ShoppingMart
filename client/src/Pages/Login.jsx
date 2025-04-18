@@ -15,7 +15,7 @@ const Login = ({ onSignupClick, onLoginSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4000/user/login", form);
+            const response = await axios.post("https://shoppingmart-u430.onrender.com/user/login", form);
             if (response) {
                 Swal.fire({
                     icon: 'success',
