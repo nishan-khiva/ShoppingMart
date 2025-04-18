@@ -85,7 +85,7 @@ const ShoppingCart = () => {
         {cartItems.map(item => (
           <div key={item._id} className='grid grid-cols-3 items-center gap-32 border-b pb-3 mb-3'>
             <div className='flex gap-4 items-center'>
-              <img src={`http://localhost:4000/uploads/${item.productimage}`} className='w-16 h-16 object-cover rounded' />
+              <img src={`https://shoppingmart-u430.onrender.com/uploads/${item.productimage}`} className='w-16 h-16 object-cover rounded' />
               <div>
                 <h3 className='font-semibold text-gray-700'>{item.productname}</h3>
                 <div className='flex items-center gap-2 mt-1'>
