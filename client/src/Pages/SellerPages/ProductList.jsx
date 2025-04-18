@@ -10,7 +10,7 @@ const ProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/products/");
+      const res = await axios.get("https://shoppingmart-u430.onrender.com/products/");
       setProducts(res.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -22,7 +22,7 @@ const ProductList = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:4000/products/${id}`);
+      await axios.delete(`https://shoppingmart-u430.onrender.com/products/${id}`);
       setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
