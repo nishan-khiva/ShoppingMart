@@ -45,7 +45,7 @@ const AllProducts = () => {
                         {filtered.map((product) => (
                             <div key={product._id} className='flex flex-col  border border-gray-400 rounded p-3'>
                                 <img
-                                    src={`http://localhost:4000/uploads/${product.productimage}`}
+                                    src={`https://shoppingmart-u430.onrender.com/uploads/${product.productimage}`}
                                     alt={product.productname}
                                     className='transition-transform duration-300 hover:scale-105   object-cover rounded'
                                 />
