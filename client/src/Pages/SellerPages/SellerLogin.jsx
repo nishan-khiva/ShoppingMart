@@ -11,7 +11,7 @@ const SellerLogin = ({ setIsSellerLoggedIn }) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:4000/employees/login', {
+      const res = await axios.post('https://shoppingmart-u430.onrender.com/employees/login', {
         email,
         password,
       });
