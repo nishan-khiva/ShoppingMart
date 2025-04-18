@@ -124,7 +124,7 @@ const AddCategory = () => {
                 <div className="flex items-center gap-4">
                   {cat.image && (
                     <img
-                      src={`http://localhost:4000/${cat.image}`}
+                      src={`https://shoppingmart-u430.onrender.com/${cat.image}`}
                       alt={cat.name}
                       className="w-12 h-12 object-cover rounded"
                     />
