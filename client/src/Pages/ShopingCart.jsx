@@ -44,7 +44,7 @@ const ShoppingCart = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:4000/api/orders/place', orderDetails);
+      const response = await axios.post('https://shoppingmart-u430.onrender.com/api/orders/place', orderDetails);
       Swal.fire({
         icon: 'success',
         title: 'Order Placed!',
