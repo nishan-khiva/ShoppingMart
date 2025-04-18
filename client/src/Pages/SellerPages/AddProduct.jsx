@@ -23,7 +23,7 @@ const AddProduct = () => {
   useEffect(() => {
     // Fetch product data if editing
     if (productId) {
-      axios.get(`http://localhost:4000/products/${productId}`).then((res) => {
+      axios.get(https://shoppingmart-u430.onrender.com/products/${productId}`).then((res) => {
         const { productname, productdesc, productcategory, productprice, sellprice } = res.data;
         setFormdata({ productname, productdesc, productcategory, productprice, sellprice });
         setPreviewImage(`http://localhost:4000/uploads/${res.data.productimage}`);
@@ -31,7 +31,7 @@ const AddProduct = () => {
     }
 
     // ✅ Fetch category list for dropdown
-    axios.get('http://localhost:4000/categories')
+    axios.get('https://shoppingmart-u430.onrender.com/categories')
       .then(res => setCategories(res.data))
       .catch(err => console.error("Failed to fetch categories", err));
   }, [productId]);
@@ -62,11 +62,11 @@ const AddProduct = () => {
     try {
       let response;
       if (productId) {
-        response = await axios.put(`http://localhost:4000/products/${productId}`, data, {
+        response = await axios.put(`https://shoppingmart-u430.onrender.com/products/${productId}`, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       } else {
-        response = await axios.post("http://localhost:4000/products/", data, {
+        response = await axios.post("https://shoppingmart-u430.onrender.com/products/", data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       }
