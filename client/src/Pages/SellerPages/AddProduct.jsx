@@ -23,7 +23,7 @@ const AddProduct = () => {
   useEffect(() => {
     // Fetch product data if editing
     if (productId) {
-      axios.get(https://shoppingmart-u430.onrender.com/products/${productId}`).then((res) => {
+      axios.get(`https://shoppingmart-u430.onrender.com/products/${productId}`).then((res) => {
         const { productname, productdesc, productcategory, productprice, sellprice } = res.data;
         setFormdata({ productname, productdesc, productcategory, productprice, sellprice });
         setPreviewImage(`http://localhost:4000/uploads/${res.data.productimage}`);
