@@ -11,7 +11,7 @@ const AddCategory = () => {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/categories');
+      const res = await axios.get('https://shoppingmart-u430.onrender.com/categories');
       setCategories(res.data);
     } catch (err) {
       console.error(err);
@@ -39,11 +39,11 @@ const AddCategory = () => {
 
     try {
       if (editingId) {
-        await axios.put(`http://localhost:4000/categories/${editingId}`, formData);
+        await axios.put(`https://shoppingmart-u430.onrender.com/categories/${editingId}`, formData);
         toast.success("Category updated!");
         setEditingId(null);
       } else {
-        await axios.post('http://localhost:4000/categories', formData);
+        await axios.post('https://shoppingmart-u430.onrender.com/categories', formData);
         toast.success("Category added successfully!");
       }
       setCategoryName('');
@@ -58,7 +58,7 @@ const AddCategory = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
-        await axios.delete(`http://localhost:4000/categories/${id}`);
+        await axios.delete(`https://shoppingmart-u430.onrender.com/categories/${id}`);
         toast.success("Category deleted!");
         fetchCategories();
       } catch (err) {
