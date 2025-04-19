@@ -114,7 +114,7 @@ const Navbar = () => {
                 </div>
             ) : (
                 <div className='flex flex-wrap sm:flex-nowrap gap-4 sm:gap-6 items-center justify-end'>
-                     <Link to="/seller"><h3 className='text-sm sm:text-base border rounded'>Admin Dashboard</h3></Link>
+                     <Link to="/seller"><h3 className='text-sm sm:text-base border rounded px-3 py-2'>Admin Dashboard</h3></Link>
                     <Link to='/'><h3 className='text-sm sm:text-base'>Home</h3></Link>
                     <Link to="/all-products"><h3 className='text-sm sm:text-base'>All Product</h3></Link>
                     
