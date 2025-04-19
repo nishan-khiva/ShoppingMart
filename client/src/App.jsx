@@ -51,6 +51,7 @@ const App = () => {
         <Route path="/all-products" element={<AllProducts />} />
         <Route path="/shoping" element={<ShoppingCart />} />
         <Route path="/category/:categoryName" element={<CategoryProducts />} />
+        <Route path="*" element={<Home />} />
       </Routes>
       </CartProvider>
       </SearchProvider>
