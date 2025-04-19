@@ -163,11 +163,12 @@ const AddProduct = () => {
           <div className='px-10 py-8'>
             <label htmlFor="fileInput">
               <div className=" border border-gray-300 rounded overflow-hidden cursor-pointer flex items-center justify-center">
-                <img
-                  src={ "/assets/upload_area.png" || previewImage }
-                  className='w-full h-full object-cover'
-                  alt="upload"
-                />
+               <img
+              src={previewImage || "/assets/upload_area.png"}
+              className='w-full h-full object-cover'
+              alt="upload"
+              />
+
               </div>
             </label>
             <input
