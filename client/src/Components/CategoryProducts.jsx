@@ -12,13 +12,13 @@ const CategoryProducts = () => {
     const { addToCart } = useCart();
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/categories/${categoryName}/products`)
+        axios.get(`https://shoppingmart-u430.onrender.com/categories/${categoryName}/products`)
             .then(res => setProducts(res.data))
             .catch(err => console.error("Error fetching products:", err));
     }, [categoryName]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/categories')
+        axios.get('https://shoppingmart-u430.onrender.com/categories')
             .then(res => setCategories(res.data))
             .catch(err => console.error("Error fetching categories:", err));
     }, []);
@@ -51,7 +51,7 @@ const CategoryProducts = () => {
                     {products.map(product => (
                         <div key={product._id} className='flex flex-col border border-gray-400 rounded p-3'>
                             <img
-                                src={`http://localhost:4000/uploads/${product.productimage}`}
+                                src={`https://shoppingmart-u430.onrender.com/uploads/${product.productimage}`}
                                 alt={product.productname}
                                 className='transition-transform duration-300 hover:scale-105 w-full h-40 object-cover rounded'
                             />
