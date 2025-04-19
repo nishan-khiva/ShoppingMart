@@ -60,7 +60,7 @@ const ProductList = () => {
               <tr key={product._id} className="text-sm border-t hover:bg-gray-50">
                 <td className="px-4 py-2 border">
                   <img
-                    src={`http://localhost:4000/uploads/${product.productimage}`}
+                    src={`https://shoppingmart-u430.onrender.com/uploads/${product.productimage}`}
                     alt={product.productname}
                     className="w-16 h-16 object-cover rounded"
                   />
