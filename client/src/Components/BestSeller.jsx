@@ -65,9 +65,10 @@ const BestSeller = () => {
               {[1, 2, 3, 4, 5].map((i) => (
                 <img
                   key={i}
-                  src="/public/star_icon.svg"
-                  className={`w-3.5 ${i === 5 ? 'opacity-50' : ''}`}
-                />
+                  src="/star_icon.svg"
+                   className={`w-3.5 ${i >= 4 ? "opacity-50" : ""}`}
+                   alt="star"
+                 />
               ))}
             </div>
             <div className='flex gap-1 justify-between items-center mt-2'>
