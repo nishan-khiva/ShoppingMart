@@ -26,7 +26,7 @@ const AddProduct = () => {
       axios.get(`https://shoppingmart-u430.onrender.com/products/${productId}`).then((res) => {
         const { productname, productdesc, productcategory, productprice, sellprice } = res.data;
         setFormdata({ productname, productdesc, productcategory, productprice, sellprice });
-        setPreviewImage(`http://localhost:4000/uploads/${res.data.productimage}`);
+        setPreviewImage(`https://shoppingmart-u430.onrender.com/uploads/${res.data.productimage}`);
       }).catch(err => console.error("Failed to fetch product:", err));
     }
 
