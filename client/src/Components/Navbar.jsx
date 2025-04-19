@@ -115,7 +115,7 @@ const Navbar = () => {
             ) : (
                 <div className='flex flex-wrap sm:flex-nowrap gap-4 sm:gap-6 items-center justify-end'>
                     <Link to='/'><h3 className='text-sm sm:text-base'>Home</h3></Link>
-                     <Link to="/seller"><h3 className='text-sm sm:text-base'>Admin Dashboard</h3></Link>
+{/*                      <Link to="/seller"><h3 className='text-sm sm:text-base'>Admin Dashboard</h3></Link> */}
                     <Link to="/all-products"><h3 className='text-sm sm:text-base'>All Product</h3></Link>
                     
 
