@@ -9,7 +9,7 @@ const BottomBanner = () => {
                 <h1 className='text-4xl text-green-600 font-semibold'>Why We Are the Best?</h1>
                 <div className='flex gap-1 py-4'>
                     <div>
-                        <img src='\public\delivery_truck.svg' />
+                        <img src='/delivery_truck.svg' />
                     </div>
                     <div className='leading-3'>
                         <h1 className='font-semibold text-xl'>Fastest Delivery</h1>
@@ -19,7 +19,7 @@ const BottomBanner = () => {
 
                 <div className='flex gap-1 '>
                     <div>
-                        <img src='\public\leaf_icon.svg' />
+                        <img src='/leaf_icon.svg' />
                     </div>
                     <div className='leading-3'>
                         <h1 className='font-semibold text-xl'>Freshness Guaranteed</h1>
@@ -29,7 +29,7 @@ const BottomBanner = () => {
 
                 <div className='flex gap-1 py-3 '>
                     <div>
-                        <img src='\public\coin_icon.svg' />
+                        <img src='/coin_icon.svg' />
                     </div>
                     <div className='leading-3'>
                         <h1 className='font-semibold text-xl'>Affordable Prices</h1>
@@ -39,7 +39,7 @@ const BottomBanner = () => {
 
                 <div className='flex gap-1 py-3 '>
                     <div>
-                        <img src='\public\trust_icon.svg' />
+                        <img src='/trust_icon.svg' />
                     </div>
                     <div className='leading-3'>
                         <h1 className='font-semibold text-xl'>Trusted by Thousands</h1>
