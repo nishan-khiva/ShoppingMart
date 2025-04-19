@@ -19,7 +19,7 @@ const Catagory = () => {
   ];
 
   useEffect(() => {
-    axios.get('http://localhost:4000/categories')
+    axios.get('https://shoppingmart-u430.onrender.com/categories')
       .then(res => setCategories(res.data))
       .catch(err => console.error("Failed to fetch categories:", err));
   }, []);
@@ -32,7 +32,7 @@ const Catagory = () => {
           <Link to={`/category/${cat.name.toLowerCase()}`} key={cat._id}>
           <div className={`w-[14vw] rounded-xl ${bgColors[index % bgColors.length]} flex flex-col items-center`}>
             <img
-              src={`http://localhost:4000/${cat.image}`}
+              src={`https://shoppingmart-u430.onrender.com/${cat.image}`}
               className='h-[150px] transition-transform duration-300 hover:scale-105 object-cover'
               alt={cat.name}
             />
