@@ -164,7 +164,7 @@ const AddProduct = () => {
             <label htmlFor="fileInput">
               <div className=" border border-gray-300 rounded overflow-hidden cursor-pointer flex items-center justify-center">
                 <img
-                  src={previewImage || "/src/assets/upload_area.png"}
+                  src={previewImage || "/upload_area.png"}
                   className='w-full h-full object-cover'
                   alt="upload"
                 />
