@@ -32,6 +32,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+         <Route path="*" element={<Home />} />
         <Route path="/seller-login" element={<SellerLogin setIsSellerLoggedIn={setIsSellerLoggedIn} />} />
        
         <Route path="/seller" element={
