@@ -4,8 +4,8 @@ import axios from 'axios';
 
 const SellerLogin = ({ setIsSellerLoggedIn }) => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('adminnishan@gmail.com');
+  const [password, setPassword] = useState('7829');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
