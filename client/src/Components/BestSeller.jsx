@@ -49,29 +49,29 @@ const BestSeller = () => {
   ];
 
   return (
-    <div className='px-18 py-6'>
-      <h1 className='text-3xl font-semibold'>Best Seller</h1>
-      <div className='grid grid-cols-5 gap-2 py-3'>
+    <div className='px-4 sm:px-6 lg:px-18 py-6'>
+      <h1 className='text-3xl font-semibold mb-4'>Best Seller</h1>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4'>
         {products.map((product) => (
-          <div key={product._id} className='flex flex-col border border-gray-400 rounded p-3'>
+          <div key={product._id} className='flex flex-col border border-gray-400 rounded p-4'>
             <img
               src={product.productimage}
               alt={product.productname}
-              className='transition-transform duration-300 hover:scale-105'
+              className='transition-transform duration-300 hover:scale-105 w-full h-auto'
             />
-            <p className='opacity-40'>Vegetables</p>
-            <h3 className='font-semibold'>{product.productname}</h3>
-            <div className='flex gap-1'>
+            <p className='opacity-40 text-sm mt-2'>Vegetables</p>
+            <h3 className='font-semibold text-lg mt-2'>{product.productname}</h3>
+            <div className='flex gap-1 mt-1'>
               {[1, 2, 3, 4, 5].map((i) => (
                 <img
                   key={i}
-                  src="/star_icon.svg"
-                   className={`w-3.5 ${i >= 4 ? "opacity-50" : ""}`}
-                   alt="star"
-                 />
+                  src='/star_icon.svg'
+                  className={`w-3.5 ${i >= 4 ? 'opacity-50' : ''}`}
+                  alt='star'
+                />
               ))}
             </div>
-            <div className='flex gap-1 justify-between items-center mt-2'>
+            <div className='flex gap-1 justify-between items-center mt-4'>
               <h2 className='text-green-600 font-semibold text-xl'> ₹{product.sellprice}</h2>
               <p className='line-through opacity-40 text-[14px] mt-[2px]'>₹{product.originalprice}</p>
               <button
@@ -83,7 +83,7 @@ const BestSeller = () => {
                       title: 'Please Login First',
                       text: 'You need to be logged in to add items to the cart.',
                       showConfirmButton: true,
-                      confirmButtonColor: '#3085d6'
+                      confirmButtonColor: '#3085d6',
                     });
                   } else {
                     addToCart(product);
