@@ -11,7 +11,7 @@ const MainBanner = () => {
         className="w-full h-auto object-cover"
       />
 
-      <div className="absolute top-[32%] sm:top-[25%] left-[8%] sm:left-[15%] w-[50%] sm:w-[60%] md:w-[40%] font-semibold">
+      <div className="absolute top-[28%] sm:top-[25%] left-[8%] sm:left-[15%] w-[50%] sm:w-[60%] md:w-[40%] font-semibold">
         <h1 className="sm:text-lg md:text-5xl leading-snug sm:leading-tight mb-4 sm:top-[]">
           Freshness You Can Trust, Savings You will Love!
         </h1>
