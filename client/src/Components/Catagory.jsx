@@ -19,29 +19,33 @@ const Catagory = () => {
   ];
 
   useEffect(() => {
-    axios.get('https://shoppingmart-u430.onrender.com/categories')
+    axios.get('http://localhost:4000/categories')
       .then(res => setCategories(res.data))
       .catch(err => console.error("Failed to fetch categories:", err));
   }, []);
 
   return (
-    <div className='px-18 py-6'>
-      <h1 className='text-3xl font-semibold'>Categories</h1>
-      <div className='grid grid-cols-6 gap-2 py-3'>
+    <div className="px-4 sm:px-6 md:px-10 lg:px-16 py-6 sm:w-full sm:flex-wrap">
+      <h1 className="text-2xl sm:text-3xl font-semibold mb-4">Categories</h1>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {categories.map((cat, index) => (
           <Link to={`/category/${cat.name.toLowerCase()}`} key={cat._id}>
-          <div className={`w-[14vw] rounded-xl ${bgColors[index % bgColors.length]} flex flex-col items-center`}>
-            <img
-              src={`https://shoppingmart-u430.onrender.com/${cat.image}`}
-              className='h-[150px] transition-transform duration-300 hover:scale-105 object-cover'
-              alt={cat.name}
-            />
-            <p className='font-serif mb-1'>{cat.name}</p>
-          </div>
-        </Link>
+            <div
+              className={`rounded-xl ${bgColors[index % bgColors.length]} flex flex-col items-center p-3 transition-shadow hover:shadow-md`}
+            >
+              <img
+                src={`http://localhost:4000/${cat.image}`}
+                className="h-[120px] sm:h-[140px] md:h-[150px] object-cover rounded-md transition-transform duration-300 hover:scale-105"
+                alt={cat.name}
+              />
+              <p className="font-serif mt-2 text-center text-sm sm:text-base">{cat.name}</p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
+
   );
 };
 
