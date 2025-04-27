@@ -1,22 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Never = () => {
+    const[email, setEmail]= useState('')
+    const handleSubscribe = (e) => {
+        e.preventDefault();
+        setEmail('')
+        alert('thank for Subscribe')
+        
+    }
+
     return (
         <div className='px-18 py-9 flex flex-col justify-center items-center' >
             <h1 className='text-3xl font-semibold'>Never Miss a Deal!</h1>
             <p className='font-sans '>Subscribe to get the latest offers, new arrivals, and exclusive discounts</p>
             <div className="flex mt-4 w-full max-w-md">
-                <input
-                    type="email"
-                    placeholder="Enter your email ID"
-                    className="border border-gray-300 rounded-l px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400"
-                />
-                <button
-                    type="submit"
-                    className="bg-green-600 text-white px-4 py-2 rounded-r hover:bg-green-700 transition"
-                >
-                    Subscribe
-                </button>
+                <form onSubmit={handleSubscribe} className='flex w-full max-w-md'>
+                    <input
+                        type="email"
+                        placeholder="Enter your email ID"
+                        required
+                        value={email}
+                        onChange={(e)=>setEmail(e.target.value)}
+                        className="border border-gray-300 rounded-l px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400"
+                    />
+                    <button
+                        type="submit"
+                        className="bg-green-600 text-white px-4 py-2 rounded-r hover:bg-green-700 transition"
+                    >
+                        Subscribe
+                    </button>
+                </form>
             </div>
 
 
