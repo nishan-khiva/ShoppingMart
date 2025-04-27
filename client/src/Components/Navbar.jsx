@@ -218,6 +218,7 @@ const Navbar = () => {
                             {cartItems.length}
                         </span>
                     </Link>
+                      <Link to="/seller" onClick={() => setMenuOpen(false)}>Seller Dashboard</Link>
                     {isLoggedIn ? (
                         <>
                             <Link to="/myaccount" onClick={() => setMenuOpen(false)}>My Account</Link>
