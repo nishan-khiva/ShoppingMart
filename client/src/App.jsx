@@ -111,7 +111,7 @@ const App = () => {
               <Seller />
             </ProtectedRoute>
  }
-        >
+        />
           <Route index element={<Dashboard />} />
           <Route path="add-product" element={<AddProduct />} />
           <Route path="add-category" element={<AddCategory />} />
