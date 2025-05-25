@@ -3,7 +3,11 @@ const bcrypt = require('bcryptjs');
 
 const employeeSchema = new mongoose.Schema({
   name: String,
-  role: String,
+   role: {
+    type: String,
+    enum: ["manager", "admin", "employee","HR"], // Optional: add other roles
+    default: "employee"
+  },
   status: String,
   image: String,
   email: { type: String, required: true, unique: true },

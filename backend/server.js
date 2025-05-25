@@ -10,6 +10,8 @@ const userRoutes = require('./Router/UserSignRouter');
 const categoryRoutes = require('./Router/CategoryRouter');
 const employeeRoutes = require('./Router/EmployeeRoutes'); 
 const orderRoutes = require('./Router/OrderRoutes');
+const wishlistRoutes = require('./Router/WishlistRouter')
+const userAddressRoutes = require('./Router/UserAddressRouter')
 
 const app = express();
 
@@ -32,6 +34,8 @@ app.use('/user', userRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/employees', employeeRoutes);  
 app.use('/api/orders', orderRoutes);
+app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/address', userAddressRoutes);
 
 // Default route
 app.get('/', (req, res) => {

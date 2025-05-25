@@ -1,43 +1,43 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { FaTachometerAlt, FaAddressBook } from "react-icons/fa";
+import SellerNavbar from '../SellerPages/sellerNavbar';
 
 const Seller = () => {
-    return (
-        <>
-            <div className='flex h-screen overflow-hidden mt-[10vh] '>
-                <div className='w-[18vw] h-full border-r px-4 py-6 font-medium bg-white sticky top-0'>
-                    <div className='flex flex-col gap-6'>
-                        <Link to="/seller" className='flex gap-2 items-center hover:underline'>
-                            <FaTachometerAlt size={20} className="text-gray-600" />
-                            <p>Dashboard</p>
-                        </Link>
-                        <Link to="add-category" className='flex gap-2 items-center hover:underline'>
-                            <img src="/add_icon.svg" alt="Add" />
-                            <p>Add Category</p>
-                        </Link>
-                        <Link to="product-list" className='flex gap-2 items-center hover:underline'>
-                            <img src="/product_list_icon.svg" alt="List" />
-                            <p>Manage Products</p>
-                        </Link>
-                        
-                        <Link to="order-list" className='flex gap-2 items-center hover:underline'>
-                            <img src="/order_icon.svg" alt="Orders" />
-                            <p>Order List</p>
-                        </Link>
-                        <Link to="employee-list" className='flex gap-2 items-center hover:underline'>
-                            <FaAddressBook size={21} />
-                            <p>Employee List</p>
-                        </Link>
-                    </div>
-                </div>
+  return (
+    <>
+    <SellerNavbar/>
+    <div className="flex flex-col md:flex-row h-screen sm:mt-[10vh] mt-2 overflow-hidden">
+      {/* Sidebar */}
+      <div className="w-full md:w-[18vw] h-auto md:h-full border-b md:border-b-0 md:border-r bg-white sticky top-[10vh] md:top-0 overflow-x-auto md:overflow-x-visible">
+        <div className="flex flex-row md:flex-col gap-4 md:gap-6 p-4 font-semibold text-gray-700 text-[14px] md:text-[16px]">
+          <NavItem to="/seller" icon={<FaTachometerAlt size={22} className="text-green-600" />} label="Dashboard" />
+          <NavItem to="add-category" icon={<img src="/add_icon.svg" alt="Add" className="w-6 h-6" />} label="Add Category" />
+          <NavItem to="product-list" icon={<img src="/product_list_icon.svg" alt="List" className="w-6 h-6" />} label="Manage Products" />
+          <NavItem to="order-list" icon={<img src="/order_icon.svg" alt="Orders" className="w-6 h-6" />} label="Order List" />
+          <NavItem to="employee-list" icon={<FaAddressBook size={22} className="text-blue-600" />} label="Employee List" />
+        </div>
+      </div>
 
-                <div className='flex-1 h-full overflow-y-auto p-4 scrollbar-hide'>
-                    <Outlet />
-                </div>
-            </div>
-        </>
-    );
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto px-3 bg-gray-50">
+        <Outlet />
+      </div>
+    </div>
+    </>
+  );
 };
+
+const NavItem = ({ to, icon, label }) => (
+  <Link 
+    to={to} 
+    className="flex items-center min-w-max gap-2 md:gap-3 hover:underline hover:text-green-600 transition-all"
+  >
+    <div className="w-6 h-6 flex items-center justify-center">
+      {icon}
+    </div>
+    <span className="whitespace-nowrap">{label}</span>
+  </Link>
+);
 
 export default Seller;

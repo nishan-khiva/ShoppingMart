@@ -75,7 +75,7 @@ const AddCategory = () => {
 
   return (
     <div className="w-full mx-auto p-4">
-      <div className="bg-white rounded shadow-md p-4">
+      <div className="bg-white rounded shadow-md p-4 mt-[8vh] sm:mt-0">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">
           {editingId ? 'Edit Category' : 'Add New Category'}
         </h2>
@@ -111,7 +111,9 @@ const AddCategory = () => {
 
       {/* Category List */}
       <div className="mt-6">
-        <h1 className="text-xl font-semibold mb-3">Category List</h1>
+        <h1 className="text-xl font-semibold mb-3">Category List
+        <span className="ml-4 text-sm text-gray-600">Total Category: { categories.length}</span>
+        </h1>
         {categories.length === 0 ? (
           <p className="text-gray-500">No categories found.</p>
         ) : (

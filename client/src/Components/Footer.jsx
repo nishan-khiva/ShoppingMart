@@ -15,7 +15,7 @@ const Footer = () => {
                         <h1 className="font-semibold text-[16px]">Quick Links</h1>
                         <div className="font-sans opacity-45 flex flex-col text-[14px] mt-1">
                             <a href="#">Home</a>
-                            <a href="#">Best Seller</a>
+                            <a href="#best">Best Seller</a>
                             <a href="#">Offers & Deals</a>
                             <a href="#">Contact us</a>
                             <a href="#">FAQs</a>

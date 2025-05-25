@@ -23,7 +23,11 @@ const Products = new Schema({
     sellprice:{
         type:Number,
         required:true,
-    }
+    },
+    bestseller: {
+        type: Boolean,
+        default: false,
+      },
 })
 
 module.exports = mongoose.model('Product', Products);

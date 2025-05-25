@@ -97,8 +97,8 @@ exports.loginEmployee = async (req, res) => {
     }
     // Generate JWT Token
     const token = jwt.sign(
-      { employeeId: employee._id, email: employee.email },
-      process.env.JWT_SECRET2, // Use environment variable
+      { employeeId: employee._id, role: employee.role, name:employee.name },
+      process.env.JWT_SECRET2, 
       { expiresIn: '1h' }
     );
 

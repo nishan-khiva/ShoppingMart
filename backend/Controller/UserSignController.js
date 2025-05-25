@@ -6,8 +6,7 @@ require("dotenv").config();
 //Post UserSign Details
 exports.signdetail = async (req, res) => {
     try {
-        const { name, email, password, confirmpassword } = req.body;
-
+        const { name, email, password, confirmpassword, } = req.body;
         if (!name || !email || !password || !confirmpassword) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
@@ -44,27 +43,37 @@ exports.signdetail = async (req, res) => {
 exports.userlogin = async (req, res) => {
     const { email, password } = req.body;
     try {
-        // Check if user exists
         const existingUser = await UserDetails.findOne({ email });
         if (!existingUser) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
-        // Compare hashed password
         const isMatch = await bcrypt.compare(password, existingUser.password);
         if (!isMatch) {
             return res.status(401).json({ success: false, message: "Invalid password" });
         }
-        // generate JWT token
         const token = jwt.sign(
-            { userId: existingUser._id, email: existingUser.email },
-            "your_jwt_secret_key", 
+            { userId: existingUser._id, name: existingUser.name, email: existingUser.email, },
+            "your_very_secret_key",
             { expiresIn: "1h" }
         );
-        return res.status(200).json({
-            token
-        });
+        return res.status(200).json({ token });
     } catch (error) {
-        console.error("Login error:", error);
         return res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+//user update
+exports.userUpdate = async (req, res)=>{
+    const { name, email } = req.body;
+    try{
+        const updateUser = await UserDetails.findByIdAndUpdate(
+            req.params.id,
+            {name, email},
+            {new: true}
+        )
+        res.json(updateUser);
+    }catch(error){
+        res.status(500).json({ message: 'Error updating user' });
+    }
+}
+

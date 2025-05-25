@@ -45,7 +45,6 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => {
     setCartItems([]);
     localStorage.removeItem('cartItems');
-    toast.success("Cart cleared");
   };
 
   return (

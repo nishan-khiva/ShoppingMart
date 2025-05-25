@@ -1,78 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCart } from '../Context/CartContext';
-import Potato from '../assets/potato_image_1.png';
-import Carrot from '../assets/carrot_image.png';
-import Tomato from '../assets/tomato_image_2.png';
-import Onion from '../assets/onion_image_1.png';
-import Spinach from '../assets/spinach_image_1.png';
+import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const BestSeller = () => {
   const { addToCart } = useCart();
+  const [products, setProducts] = useState([]);
 
-  const products = [
-    {
-      _id: '1',
-      productname: 'Potato 500g',
-      sellprice: 35,
-      originalprice: 40,
-      productimage: Potato,
-    },
-    {
-      _id: '2',
-      productname: 'Carrot 500g',
-      sellprice: 45,
-      originalprice: 50,
-      productimage: Carrot,
-    },
-    {
-      _id: '3',
-      productname: 'Tomato 1kg',
-      sellprice: 30,
-      originalprice: 40,
-      productimage: Tomato,
-    },
-    {
-      _id: '4',
-      productname: 'Onion 500g',
-      sellprice: 35,
-      originalprice: 40,
-      productimage: Onion,
-    },
-    {
-      _id: '5',
-      productname: 'Spinach 500g',
-      sellprice: 33,
-      originalprice: 44,
-      productimage: Spinach,
-    },
-  ];
+  useEffect(() => {
+    const fetchBestSellers = async () => {
+      try {
+        const res = await axios.get('http://localhost:4000/products/bestsellers');
+        setProducts(res.data);
+      } catch (error) {
+        console.error("Error fetching best seller products:", error);
+      }
+    };
+
+    fetchBestSellers();
+  }, []);
 
   return (
-    <div className='px-18 py-6'>
-      <h1 className='text-3xl font-semibold'>Best Seller</h1>
-      <div className='grid grid-cols-5 gap-2 py-3'>
+    <div className="px-4 sm:px-6 md:px-10 lg:px-18 py-6" id='best'>
+      <h1 className="text-3xl font-semibold">Best Seller</h1>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 py-3">
         {products.map((product) => (
-          <div key={product._id} className='flex flex-col border border-gray-400 rounded p-3'>
+          <div key={product._id} className="flex flex-col border border-gray-400 rounded p-3">
             <img
-              src={product.productimage}
+              src={`http://localhost:4000/uploads/${product.productimage}`}
               alt={product.productname}
-              className='transition-transform duration-300 hover:scale-105'
+              className="transition-transform duration-300 hover:scale-105 object-contain h-[150px] w-full"
             />
-            <p className='opacity-40'>Vegetables</p>
-            <h3 className='font-semibold'>{product.productname}</h3>
-            <div className='flex gap-1'>
+            <p className="opacity-40">{product.productcategory || "Vegetables"}</p>
+            <h3 className="font-semibold">{product.productname}</h3>
+
+            <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((i) => (
                 <img
                   key={i}
-                  src="/public/star_icon.svg"
+                  src="/star_icon.svg"
                   className={`w-3.5 ${i === 5 ? 'opacity-50' : ''}`}
+                  alt="star"
                 />
               ))}
             </div>
-            <div className='flex gap-1 justify-between items-center mt-2'>
-              <h2 className='text-green-600 font-semibold text-xl'> ₹{product.sellprice}</h2>
-              <p className='line-through opacity-40 text-[14px] mt-[2px]'>₹{product.originalprice}</p>
+
+            <div className="flex gap-1 justify-between items-center mt-2">
+              <h2 className="text-green-600 font-semibold text-xl">₹{product.sellprice}</h2>
+              <p className="line-through opacity-40 text-[14px] mt-[2px]">₹{product.productprice}</p>
+
               <button
                 onClick={() => {
                   const token = localStorage.getItem('token');
@@ -88,10 +65,10 @@ const BestSeller = () => {
                     addToCart(product);
                   }
                 }}
-                className='flex gap-1 bg-green-200 rounded-xl px-3 py-1 hover:bg-green-800'
+                className="flex gap-1 bg-green-200 rounded-xl px-3 py-1 hover:bg-green-800 w-full sm:w-auto mt-2 sm:mt-0"
               >
-                <img src='/nav_cart_icon.svg' className='w-3.5' />
-                <p className='text-green-500'>Add</p>
+                <img src="/nav_cart_icon.svg" className="w-3.5" alt="cart" />
+                <p className="text-green-500">Add</p>
               </button>
             </div>
           </div>

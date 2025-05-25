@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 const SellerLogin = ({ setIsSellerLoggedIn }) => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('nishankhiva@gmail.com');
+  const [password, setPassword] = useState('1234');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +18,13 @@ const SellerLogin = ({ setIsSellerLoggedIn }) => {
       });
       if (res.status === 200) {
         localStorage.setItem('isSellerLoggedIn', 'true');
-        localStorage.setItem('token', res.data.token)
+        const token = res.data.token
+        localStorage.setItem('token1', token);
+        const decodeToken = jwtDecode(token);
+        const emplyname = decodeToken.name;
+        const role= decodeToken.role;
+        localStorage.setItem('emplyname', emplyname);
+        localStorage.setItem('role',role);
         setIsSellerLoggedIn(true);
         navigate('/seller');
       } else {

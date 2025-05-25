@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { jwtDecode } from 'jwt-decode';
 const Login = ({ onSignupClick, onLoginSuccess }) => {
     const [form, setForm] = useState({
         email: '',
@@ -26,10 +26,17 @@ const Login = ({ onSignupClick, onLoginSuccess }) => {
                 })
                 setForm({ email: '', password: '' });
                 onLoginSuccess();
-                localStorage.setItem('token', response.data.token);
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                const decodedToken = jwtDecode(token);
+                const userName = decodedToken.name;
+                const userEmail = decodedToken.email;
+                const userId = decodedToken.userId;
+                localStorage.setItem('userName', userName);
+                localStorage.setItem('userEmail', userEmail);
+                localStorage.setItem('userId',userId)
             }
         } catch (error) {
-            console.error("Login Error:", error);
             if (error.response) {
                 Swal.fire({
                     icon: 'error',
@@ -43,10 +50,10 @@ const Login = ({ onSignupClick, onLoginSuccess }) => {
             }
         }
     }
+    
 
     return (
-        <div>
-
+        <div className='relative p-[3px] rounded-xl bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 animate-border-motion overflow-hidden'>
             <form onSubmit={handleSubmit} className="flex items-center justify-center ">
                 <div className="bg-gray-200 px-10 py-8 rounded-xl shadow-md w-full h-full max-w-sm">
                     <h2 className="text-2xl text-green-400 font-semibold mb-6 text-center">User <span className='text-gray-700'>Login</span></h2>
@@ -87,9 +94,8 @@ const Login = ({ onSignupClick, onLoginSuccess }) => {
                     </div>
                 </div>
             </form>
-
         </div>
     )
 }
 
-export default Login
+export default Login;

@@ -45,7 +45,7 @@ const Signup = ({ onLoginClick, onSignSuccess }) => {
     }
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center relative p-[3px] rounded-xl bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 animate-border-motion overflow-hidden">
             <form onSubmit={handleSubmit} className="bg-gray-200 m-auto px-10 py-5 rounded-xl shadow-md w-full max-w-sm ">
                 <h2 className="text-2xl font-bold text-center text-green-500 mb-6">
                     Create <span className="text-gray-800">Account</span>

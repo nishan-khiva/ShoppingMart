@@ -56,6 +56,37 @@ exports.getProductById = async (req, res) => {
     }
 };
 
+// Get only best seller products
+exports.getBestSellers = async (req, res) => {
+    try {
+        const bestSellers = await Product.find({ bestseller: true });
+        res.status(200).json(bestSellers);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Toggle bestseller status
+exports.toggleBestSeller = async (req, res) => {
+    try {
+        const { bestseller } = req.body;
+
+        const updated = await Product.findByIdAndUpdate(
+            req.params.id,
+            { bestseller },
+            { new: true }
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.status(200).json({ message: "Bestseller status updated", product: updated });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Update a product
 exports.updateProduct = [
     upload.single("productimage"),

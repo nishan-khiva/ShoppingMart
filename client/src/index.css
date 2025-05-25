@@ -10,4 +10,10 @@
     scrollbar-width: none;     /* Firefox */
   }
   
+  .simple-theme {
+    all: unset; /* optional - reset everything */
+    background-color: white;
+    color: black;
+  }
 
+  

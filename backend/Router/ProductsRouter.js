@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../Controller/ProductsController');
 
+
+
+// Specific routes — keep first
+router.get('/bestsellers', productController.getBestSellers);
+router.put('/:id/toggle-bestseller', productController.toggleBestSeller);
+
+
 // Create a new product
 router.post('/', productController.createProduct);
 
@@ -16,5 +23,6 @@ router.put('/:id', productController.updateProduct);
 
 // Delete a product by ID
 router.delete('/:id', productController.deleteProduct);
+
 
 module.exports = router;
