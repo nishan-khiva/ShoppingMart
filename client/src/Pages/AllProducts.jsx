@@ -6,25 +6,15 @@ import Swal from 'sweetalert2';
 import { useSearch } from '../Context/SearchContext';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useWishlist } from '../Context/WishlistContext';
+import { useProducts } from "../Context/ProductContext";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AllProducts = () => {
+    const { products, setProducts } = useProducts();
     const { searchQuery } = useSearch();
-    const [products, setProducts] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const { addToCart } = useCart();
     const { wishlist, toggleWishlist } = useWishlist();
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const res = await axios.get('http://localhost:4000/products/');
-                setProducts(res.data);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        };
-        fetchProducts();
-    }, []);
 
     useEffect(() => {
         const filteredItems = products.filter((item) =>
@@ -33,12 +23,12 @@ const AllProducts = () => {
         setFiltered(filteredItems);
     }, [searchQuery, products]);
 
-    const toggleLike = (productId) => {
-        setLikedProducts((prev) => ({
-            ...prev,
-            [productId]: !prev[productId]
-        }));
-    };
+    // const toggleLike = (productId) => {
+    //     setLikedProducts((prev) => ({
+    //         ...prev,
+    //         [productId]: !prev[productId]
+    //     }));
+    // };
 
     return (
         <>
@@ -62,7 +52,7 @@ const AllProducts = () => {
                                         )}
                                     </button>
                                     <img
-                                        src={`http://localhost:4000/uploads/${product.productimage}`}
+                                        src={`${API_URL}/uploads/${product.productimage}`}
                                         alt={product.productname}
                                         className='transition-transform duration-300 hover:scale-105 object-cover rounded w-full h-auto'
                                     />

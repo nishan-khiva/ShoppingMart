@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../Api/axiosInstance'
 import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -17,7 +17,7 @@ const ViewDetails = () => {
     const fetchSingleOrder = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:4000/api/orders/oder/${orderId}`, {
+        const response = await api.get(`/api/orders/oder/${orderId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setSingleOrder(response.data.order);

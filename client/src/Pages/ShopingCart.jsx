@@ -1,90 +1,87 @@
+// Imports
 import React, { useEffect, useState } from 'react';
 import { useCart } from '../Context/CartContext';
-import axios from 'axios';
+import { useWishlist } from '../Context/WishlistContext';
+import api from '../Api/axiosInstance'
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import empty from '../assets/emptyOrders.png'
+import empty from '../assets/emptyOrders.png';
 import AddressForm from '../UserProfile/AddressForm';
-import { useWishlist } from '../Context/WishlistContext';
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ShoppingCart = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { wishlist, toggleWishlist } = useWishlist();
+
   const [savedAddresses, setSavedAddresses] = useState([]);
-  const [contact, setContact] = useState();
   const [selectedAddressId, setSelectedAddressId] = useState('');
+  const [contact, setContact] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery');
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [showform, setShowForm] = useState(false);
-  const [editData, setEditData] = useState(null)
-  const { wishlist, toggleWishlist } = useWishlist();
+  const [showForm, setShowForm] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   const navigate = useNavigate();
 
+  // Pricing
   const totalPrice = cartItems.reduce((acc, item) => acc + item.sellprice * item.quantity, 0);
   const gst = totalPrice * 0.02;
   const finalAmount = totalPrice + gst;
 
-  const fetchSavedAddresses = async (selectLast = false) => {
+  // Fetch Address List
+  const fetchSavedAddresses = async (selectLast = false, selectedId = null) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:4000/api/address/my', {
+      const res = await api.get('/api/address/my', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSavedAddresses(res.data);
+
       if (res.data.length > 0) {
-        if (selectLast) {
-          setSelectedAddressId(res.data[res.data.length - 1]._id);
-        } else {
-          setSelectedAddressId((prev) => prev || res.data[0]._id);
+        if (selectedId) {
+          setSelectedAddressId(selectedId);
         }
+        else {
+          const defaultId = selectLast
+            ? res.data[res.data.length - 1]._id
+            : res.data[0]._id;
+          setSelectedAddressId(defaultId);
+        }
+      } else {
+        setSelectedAddressId('');
       }
     } catch (error) {
       console.error('Error fetching addresses:', error);
     }
   };
+
+
   useEffect(() => {
     fetchSavedAddresses();
   }, []);
-  //Address List
+
   useEffect(() => {
-    const selectedAddress = savedAddresses.find((addr) => addr._id === selectedAddressId);
-    if (selectedAddress) {
-      setContact(selectedAddress.phoneno);
+    const selected = savedAddresses.find(addr => addr._id === selectedAddressId);
+    if (selected) {
+      setContact(selected.phoneno);
     }
   }, [selectedAddressId, savedAddresses]);
 
+  // Place Order
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
 
-    //  Find the selected address object
-    const selectedAddress = savedAddresses.find((addr) => addr._id === selectedAddressId);
+    const selectedAddress = savedAddresses.find(addr => addr._id === selectedAddressId);
 
-    // Validation: Cart empty
     if (cartItems.length === 0) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Cart is Empty',
-        text: 'Please add some products before placing an order.',
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      return;
+      return Swal.fire('Cart is Empty', 'Add some products.', 'warning');
     }
 
-    // Validation: Address not selected
     if (!selectedAddress) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Address Missing',
-        text: 'Please select a delivery address.',
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      return;
+      return Swal.fire('Address Missing', 'Please select a delivery address.', 'warning');
     }
 
-    //  Prepare order data
     const orderDetails = {
       items: cartItems,
       totalPrice,
@@ -95,64 +92,34 @@ const ShoppingCart = () => {
       paymentMethod,
     };
 
-    const token = localStorage.getItem('token');
-
     try {
-      const response = await axios.post('http://localhost:4000/api/orders/place', orderDetails, {
+      const token = localStorage.getItem('token');
+      const res = await api.post('/api/orders/place', orderDetails, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Order Placed!',
-        text: response.data.message || 'Your order has been placed successfully.',
-        timer: 2000,
-        showConfirmButton: false,
-      });
-
-      //  Reset states
+      Swal.fire('Order Placed!', res.data.message || 'Order placed successfully.', 'success');
       clearCart();
-      setContact('');
       setOrderPlaced(true);
+      setContact('');
       localStorage.removeItem('cartItems');
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: error.response?.data?.message || 'Something went wrong.',
-        timer: 2000,
-        showConfirmButton: false,
-      });
+      Swal.fire('Error', error.response?.data?.message || 'Something went wrong.', 'error');
     }
   };
 
-  const formedit = (addressObj) => {
-    setShowForm(true)
+  const handleEdit = (addressObj) => {
     setEditData(addressObj);
-
-  }
-
-  //wishlist ke liye
-  const toggleLike = (productId) => {
-    setLikedProducts((prev) => ({
-      ...prev,
-      [productId]: !prev[productId]
-    }));
+    setShowForm(true);
   };
 
-
   return (
-    <div className='relative'>
+    <div className='relative mt-16'>
       {cartItems.length === 0 ? (
-        <div className="flex flex-col justify-center items-center h-[70vh] mt-18">
+        <div className="flex flex-col justify-center items-center h-[70vh]">
           <h2 className="text-2xl text-gray-500 font-semibold">Your cart is empty.</h2>
-          <div><img src={empty} className='w-[300px] mt-3' /></div>
-          <button onClick={(e) => {
-            e.stopPropagation();
-            navigate('/');
-          }}
-            className="px-6 py-2 bg-green-500 rounded-2xl ml-7 mt-7 hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 text-white font-semibold"
-          >
+          <img src={empty} className='w-[300px] mt-3' />
+          <button onClick={() => navigate('/')} className="mt-7 px-6 py-2 bg-green-500 text-white rounded-2xl hover:bg-green-700 transition">
             Shop Now
           </button>
         </div>
@@ -160,76 +127,58 @@ const ShoppingCart = () => {
         <div className='px-8 py-6 mt-[10vh] flex gap-6'>
           {/* Cart Section */}
           <div className='w-2/3'>
-            <h1 className="text-2xl font-bold mb-4 text-gray-800">Shopping Cart</h1>
-            <div className='grid grid-cols-3 gap-32 text-gray-500 font-semibold mb-4'>
+            <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
+            <div className='grid grid-cols-3 gap-32 font-semibold text-gray-500 mb-4'>
               <p>Product Details</p>
               <p>Sub Totals</p>
               <p>Action</p>
             </div>
-            {cartItems.length === 0 ? (
-              <p className="text-gray-500">Your cart is empty.</p>
-            ) : (
-              cartItems.map(item => (
-                <div key={item._id} className='grid grid-cols-3 items-center gap-32 border-b pb-3 mb-3'>
-                  <div className='flex gap-4 items-center'>
-                    <img src={`http://localhost:4000/uploads/${item.productimage}`} className='w-16 h-16 object-cover rounded' />
-                    <div>
-                      <h3 className='font-semibold text-gray-700'>{item.productname}</h3>
-                      <div className='flex items-center gap-2 mt-1'>
-                        <button
-                          className='h-[30px] w-[30px] bg-gray-200 rounded'
-                          onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                          disabled={item.quantity <= 1 || orderPlaced}
-                        >-</button>
-                        <input
-                          type="number"
-                          min="1"
-                          max="50"
-                          value={item.quantity}
-                          onChange={(e) => {
-                            let newQty = parseInt(e.target.value);
-                            if (newQty >= 1 && newQty <= 50) {
-                              updateQuantity(item._id, newQty);
-                            }
-                          }}
-                          className='w-12 text-center border rounded border-gray-300'
-                          disabled={orderPlaced}
-                        />
 
-                        <button
-                          className='h-[30px] w-[30px] bg-gray-200 rounded'
-                          onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                          disabled={item.quantity >= 50 || orderPlaced}
-                        >+</button>
-                      </div>
+            {cartItems.map(item => (
+              <div key={item._id} className='grid grid-cols-3 items-center gap-32 border-b pb-3 mb-3'>
+                <div className='flex gap-4 items-center'>
+                  <img src={`${API_URL}/uploads/${item.productimage}`} className='w-16 h-16 rounded object-cover' />
+                  <div>
+                    <h3 className='font-semibold'>{item.productname}</h3>
+                    <div className='flex items-center gap-2 mt-1'>
+                      <button
+                        onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                        className='w-[30px] h-[30px] bg-gray-200 rounded'
+                        disabled={item.quantity <= 1 || orderPlaced}
+                      >-</button>
+                      <input
+                        type="number"
+                        min="1"
+                        max="50"
+                        value={item.quantity}
+                        onChange={(e) => {
+                          let newQty = parseInt(e.target.value);
+                          if (newQty >= 1 && newQty <= 50) updateQuantity(item._id, newQty);
+                        }}
+                        className='w-12 border text-center rounded border-gray-300'
+                        disabled={orderPlaced}
+                      />
+                      <button
+                        onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                        className='w-[30px] h-[30px] bg-gray-200 rounded'
+                        disabled={item.quantity >= 50 || orderPlaced}
+                      >+</button>
                     </div>
                   </div>
-                  <p className='text-gray-800 font-semibold'>₹{(item.sellprice * item.quantity).toFixed(2)}</p>
-                  {/* Action Buttun */}
-                  <div className='flex gap-3'>
-                    {/* wishlist button */}
-                    <button onClick={() => toggleWishlist(item)}>
-                      {wishlist[item._id] ? (
-                        <AiFillHeart color="red" size={18} />
-                      ) : (
-                        <AiOutlineHeart size={18} />
-                      )}
-                    </button>
-                    {/* Remove Button */}
-                    {!orderPlaced && (
-                      <button
-                        onClick={() => removeFromCart(item._id)}
-                        className='text-red-500 hover:underline text-sm'
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </div>
-
                 </div>
-              ))
-            )}
-
+                <p className='font-semibold'>₹{(item.sellprice * item.quantity).toFixed(2)}</p>
+                <div className='flex gap-3 items-center'>
+                  <button onClick={() => toggleWishlist(item)}>
+                    {wishlist[item._id] ? <AiFillHeart size={18} color="red" /> : <AiOutlineHeart size={18} />}
+                  </button>
+                  {!orderPlaced && (
+                    <button onClick={() => removeFromCart(item._id)} className='text-red-500 hover:underline text-sm'>
+                      Remove
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Order Summary */}
@@ -237,141 +186,124 @@ const ShoppingCart = () => {
             <form onSubmit={handlePlaceOrder} className="space-y-4">
               <h2 className="text-xl font-bold mb-2">Order Summary</h2>
 
-              {/* address */}
+              {/* Address Section */}
               <div>
-                <label className="block font-semibold mb-1">Delivery Address:</label>
-
+                <label className="font-semibold mb-1 block">Delivery Address:</label>
                 {savedAddresses.length === 0 ? (
-                  <div className="bg-yellow-100 text-yellow-800 p-3 rounded text-sm">
+                  <div className="bg-yellow-100 p-3 rounded text-sm text-yellow-800">
                     No saved addresses. Please add one.
                     <button
                       type="button"
-                      className="block mt-2 text-blue-600 hover:underline text-sm"
-                      onClick={() => setShowForm(true)}
+                      onClick={() => {
+                        setEditData(null);
+                        setShowForm(true);
+                      }}
+                      className="mt-2 block text-blue-600 hover:underline"
                     >
                       Add New Address
                     </button>
                   </div>
                 ) : (
                   <>
-                    {/* Dropdown */}
                     <select
-                      className="w-full px-3 py-2 border border-gray-300 rounded"
                       value={selectedAddressId}
                       onChange={(e) => setSelectedAddressId(e.target.value)}
                       disabled={orderPlaced}
+                      className="w-full px-3 py-2 border border-gray-300 rounded"
                     >
-                      {savedAddresses.map((addr) => (
+                      {savedAddresses.map(addr => (
                         <option key={addr._id} value={addr._id}>
                           {addr.name} - {addr.city}
                         </option>
                       ))}
                     </select>
-
-                    {/* Show selected address */}
-                    <div className="mt-2 text-sm text-gray-700 bg-gray-50 border rounded p-2">
-                      {savedAddresses.find(addr => addr._id === selectedAddressId) && (
-                        <>
-                          <p><strong>{savedAddresses.find(addr => addr._id === selectedAddressId).name}</strong></p>
-                          <p>{savedAddresses.find(addr => addr._id === selectedAddressId).address}</p>
-                          <p>{savedAddresses.find(addr => addr._id === selectedAddressId).city}, {savedAddresses.find(addr => addr._id === selectedAddressId).state} - {savedAddresses.find(addr => addr._id === selectedAddressId).pincode}</p>
-                          <p>Phone: {savedAddresses.find(addr => addr._id === selectedAddressId).phoneno}</p>
-                        </>
-                      )}
-                    </div>
-
-                    <button
-                      type="button"
-                      className="mt-2 text-blue-600 hover:underline text-sm"
-                      onClick={() => setShowForm(true)}
-                    >
-                      Add New Address/
-                    </button>
-                    <button
-                      type="button"
-                      className="mt-2 text-blue-600 hover:underline text-sm"
-                      onClick={() => {
+                    <div className="mt-2 p-2 bg-gray-50 border rounded text-sm">
+                      {(() => {
                         const selected = savedAddresses.find(addr => addr._id === selectedAddressId);
-                        if (selected) {
-                          formedit(selected);  // Pass selected address object
-                        }
-                      }}
-                    >
-                      Edit
-                    </button>
+                        return selected ? (
+                          <>
+                            <p><strong>{selected.name}</strong></p>
+                            <p>{selected.address}</p>
+                            <p>{selected.city}, {selected.state} - {selected.pincode}</p>
+                            <p>Phone: {selected.phoneno}</p>
+                          </>
+                        ) : null;
+                      })()}
+                    </div>
+                    <div className='flex gap-3 text-sm mt-2'>
+                      <button type="button" onClick={() => {
+                        setEditData(null);
+                        setShowForm(true);
+                      }} className="text-blue-600 hover:underline">Add New</button>
+                      <button type="button" onClick={() => {
+                        const current = savedAddresses.find(addr => addr._id === selectedAddressId);
+                        if (current) handleEdit(current);
+                      }} className="text-blue-600 hover:underline">Edit</button>
+                    </div>
                   </>
                 )}
               </div>
 
-
-
-
-              {/* Payment Method */}
+              {/* Payment */}
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded"
                 disabled={orderPlaced}
+                className="w-full px-3 py-2 border border-gray-300 rounded"
               >
                 <option value="Cash on Delivery">Cash on Delivery</option>
                 <option value="Online Payment">Online Payment</option>
               </select>
-              {/* ✅ Product List */}
+
+              {/* Products */}
               <div>
-                <h3 style={{ marginBottom: '8px', fontWeight: 'bold' }}>Products:</h3>
-                <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+                <h3 className="font-bold mb-1">Products:</h3>
+                <ul className="text-sm">
                   {cartItems.map((item) => (
-                    <li key={item._id} style={{ marginBottom: '6px' }}>
-                      {item.productname} × {item.quantity} = ₹{(item.sellprice * item.quantity).toFixed(2)}
-                    </li>
+                    <li key={item._id}>{item.productname} × {item.quantity} = ₹{(item.sellprice * item.quantity).toFixed(2)}</li>
                   ))}
                 </ul>
               </div>
 
-              <hr style={{ margin: '8px 0' }} />
-              <hr style={{ margin: '8px 0' }} />
-              {/* Pricing */}
-              <div className='mt-4 text-sm text-right'>
+              {/* Totals */}
+              <div className='text-right text-sm mt-4'>
                 <p>Price: ₹{totalPrice.toFixed(2)}</p>
                 <p>GST (2%): ₹{gst.toFixed(2)}</p>
                 <p className='font-bold'>Total: ₹{finalAmount.toFixed(2)}</p>
               </div>
 
-              {/* Submit */}
-              <button
-                type="submit"
-                className="w-full bg-green-500 text-white font-semibold py-2 rounded hover:bg-green-600 transition"
-              >
+              <button type="submit" className="w-full py-2 bg-green-500 text-white rounded hover:bg-green-600">
                 Place Order
               </button>
             </form>
-
           </div>
         </div>
-      )
-      }
-      {/* Address Form */}
-      {showform && (
-        <div className='absolute top-0 left-0 w-full h-screen '>
-          <button
-            className='absolute mt-5 ml-[62vw] font-semibold text-xl'
-            onClick={() => setShowForm(false)}
-          >
-            X</button>
-          <div className="bg-gray-200 shadow-md rounded-lg p-6  mt-5 w-[35vw] ml-[30vw] py-9">
+      )}
+
+      {/* Address Modal */}
+      {showForm && (
+        <div className='absolute top-0 left-0 w-full h-screen flex justify-center items-start pt-10 z-50'>
+          <div className="bg-gray-300 rounded-lg p-7 w-[35vw] relative">
+            <button
+              className='absolute top-1 right-3 text-lg font-bold'
+              onClick={() => {
+                setShowForm(false);
+                setEditData(null);
+              }}
+            >
+              X
+            </button>
             <AddressForm
               show={setShowForm}
-              add={() => fetchSavedAddresses(true)}
+              add={(updatedId) => fetchSavedAddresses(false, updatedId)}
               editData={editData}
               setEditData={setEditData}
             />
           </div>
-
         </div>
       )}
     </div>
   );
 };
-
 
 export default ShoppingCart;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import api from '../Api/axiosInstance'
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 const Login = ({ onSignupClick, onLoginSuccess }) => {
@@ -15,7 +15,7 @@ const Login = ({ onSignupClick, onLoginSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4000/user/login", form);
+            const response = await api.post("/user/login", form);
             if (response) {
                 Swal.fire({
                     icon: 'success',

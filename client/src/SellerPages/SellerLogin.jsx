@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../Api/axiosInstance'
 import { jwtDecode } from 'jwt-decode';
 
 const SellerLogin = ({ setIsSellerLoggedIn }) => {
@@ -12,7 +13,7 @@ const SellerLogin = ({ setIsSellerLoggedIn }) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:4000/employees/login', {
+      const res = await api.post('/employees/login', {
         email,
         password,
       });

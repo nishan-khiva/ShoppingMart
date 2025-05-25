@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AddressForm from './AddressForm'
-import axios from 'axios'
-
+import api from '../Api/axiosInstance'
 const ManageAddress = () => {
     const [form, setForm] = useState(false);
     const [savedAddresses, setSavedAddresses] = useState([]);
@@ -9,7 +8,7 @@ const ManageAddress = () => {
     const token = localStorage.getItem('token');
     const fetchSavedAddresses = async () => {
         try {
-            const res = await axios.get('http://localhost:4000/api/address/my', {
+            const res = await api.get('/api/address/my', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setSavedAddresses(res.data);
@@ -23,7 +22,7 @@ const ManageAddress = () => {
 
     // Delete
     const handleDelete = async (id) => {
-        await axios.delete(`http://localhost:4000/api/address/${id}`, {
+        await api.delete(`/api/address/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         fetchSavedAddresses();

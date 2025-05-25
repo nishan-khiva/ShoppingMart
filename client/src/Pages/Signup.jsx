@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import axios from 'axios';
-
+import api from '../Api/axiosInstance'
 const Signup = ({ onLoginClick, onSignSuccess }) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -15,7 +14,7 @@ const Signup = ({ onLoginClick, onSignSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4000/user/sign", formData);
+            const response = await api.post("/user/sign", formData);
             if (response) {
                 Swal.fire({
                     icon: 'success',

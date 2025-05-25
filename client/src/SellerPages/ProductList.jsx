@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import axios from "axios";
+import api from '../Api/axiosInstance';
 import { Link, Outlet } from 'react-router-dom';
+import { useProducts } from "../Context/ProductContext";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
+  const { products, setProducts,  loading } = useProducts();
+  // const [products, setProducts] = useState([]);
+  
+  // No need to call fetchProducts again
+  if (loading) return <p>Loading...</p>;
+
   const navigate = useNavigate();
 
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get("http://localhost:4000/products/");
-      setProducts(res.data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
+  // const fetchProducts = async () => {
+  //   try {
+  //     const res = await axios.get("http://localhost:4000/products/");
+  //     setProducts(res.data);
+  //   } catch (error) {
+  //     console.error("Error fetching products:", error);
+  //   }
+  // };
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this product?");
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:4000/products/${id}`);
+      await api.delete(`/products/${id}`);
       setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -31,7 +38,7 @@ const ProductList = () => {
   };
   const toggleBestSeller = async (id, currentStatus) => {
     try {
-      await axios.put(`http://localhost:4000/products/${id}/toggle-bestseller`, {
+      await api.put(`/products/${id}/toggle-bestseller`, {
         bestseller: !currentStatus,
       });
       setProducts((prev) =>
@@ -45,13 +52,13 @@ const ProductList = () => {
   };
 
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
 
   return (
     <div className="p-4 md:p-6">
-      
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
         <h2 className="text-2xl font-semibold">
@@ -87,7 +94,7 @@ const ProductList = () => {
               <tr key={product._id} className="text-sm border-t hover:bg-gray-50">
                 <td className="px-4 py-3 border">
                   <img
-                    src={`http://localhost:4000/uploads/${product.productimage}`}
+                    src={`${API_URL}/uploads/${product.productimage}`}
                     alt={product.productname}
                     className="w-16 h-16 object-cover rounded"
                   />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../Api/axiosInstance'
 import { useNavigate } from 'react-router-dom';
 import Empty from '../assets/emptyOrders.png'
 
@@ -14,7 +14,7 @@ const Myorders = () => {
     const fetchOrders = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.get('http://localhost:4000/api/orders/oder-list', {
+        const response = await api.get('/api/orders/oder-list', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(response.data.orders);

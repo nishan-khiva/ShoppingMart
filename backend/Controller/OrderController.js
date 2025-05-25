@@ -120,7 +120,7 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-//   const { orderId } = req.params; // Order ID from the URL
+
 //   const { status } = req.body;
 //   const {summary}= req.body; // New status from the body
 

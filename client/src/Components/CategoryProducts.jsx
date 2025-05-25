@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../Api/axiosInstance'
 import { useCart } from '../Context/CartContext';
+import { useProducts } from '../Context/ProductContext';
 import Swal from 'sweetalert2';
 import Footer from './Footer';
 
 const CategoryProducts = () => {
     const { categoryName } = useParams();
     const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
+    const { categories, setCategories } = useProducts();
     const { addToCart } = useCart();
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/categories/${categoryName}/products`)
+        api.get(`/categories/${categoryName}/products`)
             .then(res => setProducts(res.data))
             .catch(err => console.error("Error fetching products:", err));
     }, [categoryName]);
 
-    useEffect(() => {
-        axios.get('http://localhost:4000/categories')
-            .then(res => setCategories(res.data))
-            .catch(err => console.error("Error fetching categories:", err));
-    }, []);
+    // useEffect(() => {
+    //     axios.get('http://localhost:4000/categories')
+    //         .then(res => setCategories(res.data))
+    //         .catch(err => console.error("Error fetching categories:", err));
+    // }, []);
 
     return (
         <>

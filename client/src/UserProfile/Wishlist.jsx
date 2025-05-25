@@ -15,7 +15,7 @@ const Wishlist = () => {
     
 
     return (
-        <div className=''>
+        <div>
             <div className='py-4 px-6 '>
                 <h1 className='text-2xl'>My Wishlist</h1>
             </div>

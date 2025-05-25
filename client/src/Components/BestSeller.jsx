@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useCart } from '../Context/CartContext';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useProducts } from "../Context/ProductContext";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const BestSeller = () => {
   const { addToCart } = useCart();
-  const [products, setProducts] = useState([]);
+   const { bestproducts,setBestproducts } = useProducts();
 
-  useEffect(() => {
-    const fetchBestSellers = async () => {
-      try {
-        const res = await axios.get('http://localhost:4000/products/bestsellers');
-        setProducts(res.data);
-      } catch (error) {
-        console.error("Error fetching best seller products:", error);
-      }
-    };
+  // const [products, setProducts] = useState([]);
+  // useEffect(() => {
+  //   const fetchBestSellers = async () => {
+  //     try {
+  //       const res = await api.get('/products/bestsellers');
+  //       setProducts(res.data);
+  //     } catch (error) {
+  //       console.error("Error fetching best seller products:", error);
+  //     }
+  //   };
 
-    fetchBestSellers();
-  }, []);
+  //   fetchBestSellers();
+  // }, []);
 
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-18 py-6" id='best'>
       <h1 className="text-3xl font-semibold">Best Seller</h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 py-3">
-        {products.map((product) => (
+        {bestproducts.map((product) => (
           <div key={product._id} className="flex flex-col border border-gray-400 rounded p-3">
             <img
-              src={`http://localhost:4000/uploads/${product.productimage}`}
+              src={`${API_URL}/uploads/${product.productimage}`}
               alt={product.productname}
               className="transition-transform duration-300 hover:scale-105 object-contain h-[150px] w-full"
             />

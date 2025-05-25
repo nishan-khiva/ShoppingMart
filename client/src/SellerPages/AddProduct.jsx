@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../Api/axiosInstance'
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AddProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -23,15 +24,15 @@ const AddProduct = () => {
   useEffect(() => {
     // Fetch product data if editing
     if (productId) {
-      axios.get(`http://localhost:4000/products/${productId}`).then((res) => {
+      api.get(`/products/${productId}`).then((res) => {
         const { productname, productdesc, productcategory, productprice, sellprice } = res.data;
         setFormdata({ productname, productdesc, productcategory, productprice, sellprice });
-        setPreviewImage(`http://localhost:4000/uploads/${res.data.productimage}`);
+        setPreviewImage(`${API_URL}/uploads/${res.data.productimage}`);
       }).catch(err => console.error("Failed to fetch product:", err));
     }
 
     // ✅ Fetch category list for dropdown
-    axios.get('http://localhost:4000/categories')
+    api.get('/categories')
       .then(res => setCategories(res.data))
       .catch(err => console.error("Failed to fetch categories", err));
   }, [productId]);
@@ -62,11 +63,11 @@ const AddProduct = () => {
     try {
       let response;
       if (productId) {
-        response = await axios.put(`http://localhost:4000/products/${productId}`, data, {
+        response = await api.put(`/products/${productId}`, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       } else {
-        response = await axios.post("http://localhost:4000/products/", data, {
+        response = await api.post("/products/", data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       }

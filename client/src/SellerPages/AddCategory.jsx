@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../Api/axiosInstance'
 import toast from 'react-hot-toast';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AddCategory = () => {
   const [categoryName, setCategoryName] = useState('');
@@ -11,7 +12,7 @@ const AddCategory = () => {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/categories');
+      const res = await api.get('/categories');
       setCategories(res.data);
     } catch (err) {
       console.error(err);
@@ -39,11 +40,11 @@ const AddCategory = () => {
 
     try {
       if (editingId) {
-        await axios.put(`http://localhost:4000/categories/${editingId}`, formData);
+        await api.put(`/categories/${editingId}`, formData);
         toast.success("Category updated!");
         setEditingId(null);
       } else {
-        await axios.post('http://localhost:4000/categories', formData);
+        await api.post('/categories', formData);
         toast.success("Category added successfully!");
       }
       setCategoryName('');
@@ -58,7 +59,7 @@ const AddCategory = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
-        await axios.delete(`http://localhost:4000/categories/${id}`);
+        await api.delete(`/categories/${id}`);
         toast.success("Category deleted!");
         fetchCategories();
       } catch (err) {
@@ -126,7 +127,7 @@ const AddCategory = () => {
                 <div className="flex items-center gap-4">
                   {cat.image && (
                     <img
-                      src={`http://localhost:4000/${cat.image}`}
+                      src={`${API_URL}/${cat.image}`}
                       alt={cat.name}
                       className="w-12 h-12 object-cover rounded"
                     />

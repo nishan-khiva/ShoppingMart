@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useProducts } from '../Context/ProductContext';
+const API_URL = import.meta.env.VITE_API_URL;
 const Catagory = () => {
-  const [categories, setCategories] = useState([]);
+  const {categories, setCategories}= useProducts();
 
   const bgColors = [
     'bg-red-200',
@@ -18,11 +18,11 @@ const Catagory = () => {
     'bg-orange-200'
   ];
 
-  useEffect(() => {
-    axios.get('http://localhost:4000/categories')
-      .then(res => setCategories(res.data))
-      .catch(err => console.error("Failed to fetch categories:", err));
-  }, []);
+  // useEffect(() => {
+  //   api.get('/categories')
+  //     .then(res => setCategories(res.data))
+  //     .catch(err => console.error("Failed to fetch categories:", err));
+  // }, []);
 
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-16 py-6 sm:w-full sm:flex-wrap">
@@ -35,7 +35,7 @@ const Catagory = () => {
               className={`rounded-xl ${bgColors[index % bgColors.length]} flex flex-col items-center p-3 transition-shadow hover:shadow-md`}
             >
               <img
-                src={`http://localhost:4000/${cat.image}`}
+                src={`${API_URL}/${cat.image}`}
                 className="h-[120px] sm:h-[140px] md:h-[150px] object-cover rounded-md transition-transform duration-300 hover:scale-105"
                 alt={cat.name}
               />
