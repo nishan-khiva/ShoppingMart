@@ -62,7 +62,11 @@ const CategoryProducts = () => {
                                 <img
                                     src={`http://localhost:4000/uploads/${product.productimage}`}
                                     alt={product.productname}
+<<<<<<< HEAD
                                     className='transition-transform duration-300 hover:scale-105 w-full h-auto   object-cover rounded'
+=======
+                                    className='transition-transform duration-300 hover:scale-105 w-full h-32 object-cover rounded'
+>>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
                                 />
                                 <p className='opacity-40 text-xs'>{product.productcategory}</p>
                                 <h3 className='font-semibold text-sm'>{product.productname}</h3>

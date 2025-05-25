@@ -14,7 +14,11 @@ const Signup = ({ onLoginClick, onSignSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+<<<<<<< HEAD
             const response = await api.post("/user/sign", formData);
+=======
+            const response = await axios.post("https://shoppingmart-u430.onrender.com/user/sign", formData);
+>>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
             if (response) {
                 Swal.fire({
                     icon: 'success',

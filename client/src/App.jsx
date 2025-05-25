@@ -49,6 +49,7 @@ const App = () => {
 
   return (
     <Router>
+<<<<<<< HEAD
       <ProductProvider>
         <RoleProvider>
           <WishlistProvider>
@@ -95,6 +96,38 @@ const App = () => {
         </RoleProvider>
       </ProductProvider>
 
+=======
+       <SearchProvider>
+      <CartProvider>
+      <Toaster position="top-right" reverseOrder={false} />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+         <Route path="*" element={<Home />} />
+        <Route path="/seller-login" element={<SellerLogin setIsSellerLoggedIn={setIsSellerLoggedIn} />} />
+       
+        <Route path="/seller" element={
+            <ProtectedRoute isSellerLoggedIn={isSellerLoggedIn}>
+              <Seller />
+            </ProtectedRoute>
+ }
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="add-product" element={<AddProduct />} />
+          <Route path="add-category" element={<AddCategory />} />
+          <Route path="product-list" element={<ProductList />} />
+          <Route path="order-list" element={<OrderList />} />
+          <Route path="employee-list" element={<EmployeeList />} />
+          <Route path="add-employee" element={<AddEmployee />} />
+        </Route>
+        <Route path="/all-products" element={<AllProducts />} />
+        <Route path="/shoping" element={<ShoppingCart />} />
+        <Route path="/category/:categoryName" element={<CategoryProducts />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
+      </CartProvider>
+      </SearchProvider>
+>>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
     </Router>
   );
 };

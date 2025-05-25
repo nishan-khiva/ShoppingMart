@@ -11,7 +11,7 @@ const EmployeeList = () => {
   // Fetch all employees
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/employees/');
+      const response = await axios.get('https://shoppingmart-u430.onrender.com/employees/');
       setEmployees(response.data);
       setLoading(false);
     } catch (error) {
@@ -30,7 +30,7 @@ const EmployeeList = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:4000/employees/${id}`);
+      await axios.delete(`https://shoppingmart-u430.onrender.com/employees/${id}`);
       setEmployees((prev) => prev.filter((emp) => emp._id !== id)); 
     } catch (error) {
       console.error("Error deleting employee:", error);
@@ -68,7 +68,7 @@ const EmployeeList = () => {
               <tr key={employee._id} className="text-sm border-t hover:bg-gray-50">
                 <td className="px-4 py-2 border">
                   <img
-                    src={`http://localhost:4000/uploads/${employee.image}`}
+                    src={`https://shoppingmart-u430.onrender.com/uploads/${employee.image}`}
                     alt={employee.name}
                     style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '50%' }}
                   />

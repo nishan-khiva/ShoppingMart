@@ -20,7 +20,7 @@ const AddEmployee = () => {
     if (employeeId) {
       const fetchEmployee = async () => {
         try {
-          const res = await axios.get(`http://localhost:4000/employees/${employeeId}`);
+          const res = await axios.get(`https://shoppingmart-u430.onrender.com/employees/${employeeId}`);
           const data = res.data;
           setFormData({
             name: data.name,
@@ -71,12 +71,12 @@ const AddEmployee = () => {
 
     try {
       if (employeeId) {
-        await axios.put(`http://localhost:4000/employees/${employeeId}`, formDataToSend, {
+        await axios.put(`https://shoppingmart-u430.onrender.com/employees/${employeeId}`, formDataToSend, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         alert('Employee updated successfully!');
       } else {
-        await axios.post('http://localhost:4000/employees/', formDataToSend, {
+        await axios.post('https://shoppingmart-u430.onrender.com/employees/', formDataToSend, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         alert('Employee added successfully!');

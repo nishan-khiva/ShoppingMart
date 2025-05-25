@@ -6,14 +6,23 @@ import { jwtDecode } from 'jwt-decode';
 
 const SellerLogin = ({ setIsSellerLoggedIn }) => {
   const navigate = useNavigate();
+<<<<<<< HEAD:client/src/SellerPages/SellerLogin.jsx
   const [email, setEmail] = useState('nishankhiva@gmail.com');
   const [password, setPassword] = useState('1234');
+=======
+  const [email, setEmail] = useState('adminnishan@gmail.com');
+  const [password, setPassword] = useState('7829');
+>>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/SellerLogin.jsx
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+<<<<<<< HEAD:client/src/SellerPages/SellerLogin.jsx
       const res = await api.post('/employees/login', {
+=======
+      const res = await axios.post('https://shoppingmart-u430.onrender.com/employees/login', {
+>>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/SellerLogin.jsx
         email,
         password,
       });
