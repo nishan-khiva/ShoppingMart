@@ -103,10 +103,7 @@ const App = () => {
           </WishlistProvider>
         </RoleProvider>
       </ProductProvider>
-<<<<<<< HEAD
-=======
 
-=======
        <SearchProvider>
       <CartProvider>
       <Toaster position="top-right" reverseOrder={false} />
@@ -137,8 +134,7 @@ const App = () => {
       </Routes>
       </CartProvider>
       </SearchProvider>
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
->>>>>>> 50da4d633eeb9ff2d4cbb3ddf4a26d4dea4d17f7
+
     </Router>
   );
 };
