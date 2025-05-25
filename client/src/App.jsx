@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import Seller from './Pages/Seller';
 import ShoppingCart from './Pages/ShopingCart';
 import AllProducts from './Pages/AllProducts';
+import PaymentPage from './Pages/PaymentPage'; // ← added dummy payment page
 
 // Seller Pages (Admin)
 import AddProduct from './SellerPages/AddProduct';
@@ -55,10 +56,12 @@ const App = () => {
                 <Toaster position="top-center" reverseOrder={false} />
                 <Navbar />
                 <Routes>
+                  {/* Public Routes */}
                   <Route path="/" element={<Home />} />
                   <Route path="*" element={<Home />} />
                   <Route path="/all-products" element={<AllProducts />} />
                   <Route path="/shoping" element={<ShoppingCart />} />
+                  <Route path="/payment" element={<PaymentPage />} />
                   <Route path="/category/:categoryName" element={<CategoryProducts />} />
 
                   {/* Seller/Admin Routes */}
@@ -103,38 +106,6 @@ const App = () => {
           </WishlistProvider>
         </RoleProvider>
       </ProductProvider>
-
-       <SearchProvider>
-      <CartProvider>
-      <Toaster position="top-right" reverseOrder={false} />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-         <Route path="*" element={<Home />} />
-        <Route path="/seller-login" element={<SellerLogin setIsSellerLoggedIn={setIsSellerLoggedIn} />} />
-       
-        <Route path="/seller" element={
-            <ProtectedRoute isSellerLoggedIn={isSellerLoggedIn}>
-              <Seller />
-            </ProtectedRoute>
- }
-        />
-          <Route index element={<Dashboard />} />
-          <Route path="add-product" element={<AddProduct />} />
-          <Route path="add-category" element={<AddCategory />} />
-          <Route path="product-list" element={<ProductList />} />
-          <Route path="order-list" element={<OrderList />} />
-          <Route path="employee-list" element={<EmployeeList />} />
-          <Route path="add-employee" element={<AddEmployee />} />
-        </Route>
-        <Route path="/all-products" element={<AllProducts />} />
-        <Route path="/shoping" element={<ShoppingCart />} />
-        <Route path="/category/:categoryName" element={<CategoryProducts />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
-      </CartProvider>
-      </SearchProvider>
-
     </Router>
   );
 };
