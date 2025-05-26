@@ -5,22 +5,8 @@ import { useProducts } from "../Context/ProductContext";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const BestSeller = () => {
-  const { addToCart } = useCart();
-   const { bestproducts,setBestproducts } = useProducts();
-
-  // const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //   const fetchBestSellers = async () => {
-  //     try {
-  //       const res = await api.get('/products/bestsellers');
-  //       setProducts(res.data);
-  //     } catch (error) {
-  //       console.error("Error fetching best seller products:", error);
-  //     }
-  //   };
-
-  //   fetchBestSellers();
-  // }, []);
+ const { addToCart } = useCart();
+ const { bestproducts,setBestproducts } = useProducts();
 
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-18 py-6" id='best'>
