@@ -7,7 +7,6 @@ import Home from './Pages/Home';
 import Seller from './Pages/Seller';
 import ShoppingCart from './Pages/ShopingCart';
 import AllProducts from './Pages/AllProducts';
-import PaymentPage from './Pages/PaymentPage'; // ← added dummy payment page
 
 // Seller Pages (Admin)
 import AddProduct from './SellerPages/AddProduct';
@@ -62,7 +61,6 @@ const App = () => {
                   <Route path="*" element={<Home />} />
                   <Route path="/all-products" element={<AllProducts />} />
                   <Route path="/shoping" element={<ShoppingCart />} />
-                  <Route path="/payment" element={<PaymentPage />} />
                   <Route path="/category/:categoryName" element={<CategoryProducts />} />
 
                   {/* Seller/Admin Routes */}
