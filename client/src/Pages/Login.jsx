@@ -19,11 +19,8 @@ const Login = ({ onSignupClick, onLoginSuccess }) => {
         e.preventDefault();
         setLoading(true); // Start loader
         try {
-<<<<<<< HEAD
             const response = await api.post("/user/login", form);
-=======
-            const response = await axios.post("https://shoppingmart-u430.onrender.com/user/login", form);
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
+
             if (response) {
                 Swal.fire({
                     icon: 'success',
@@ -59,7 +56,6 @@ const Login = ({ onSignupClick, onLoginSuccess }) => {
         } finally {
             setLoading(false); // Stop loader
         }
-<<<<<<< HEAD
     }
     
 
@@ -105,61 +101,7 @@ const Login = ({ onSignupClick, onLoginSuccess }) => {
                     </div>
                 </div>
             </form>
-=======
-    };
 
-    return (
-        <div className="flex items-center justify-center min-h-screen">
-            {loading ? (
-                // Loader view
-                <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 border-4 border-green-400 border-dashed rounded-full animate-spin"></div>
-                    <p className="mt-4 text-green-600 font-medium">Logging In...</p>
-                </div>
-            ) : (
-                // Form view
-                <form onSubmit={handleSubmit} className="w-full max-w-sm">
-                    <div className="bg-gray-200 px-10 py-8 rounded-xl shadow-md">
-                        <h2 className="text-2xl text-green-400 font-semibold mb-6 text-center">User <span className="text-gray-700">Login</span></h2>
-                        <div className="flex flex-col gap-4">
-                            <input
-                                type="email"
-                                name="email"
-                                value={form.email}
-                                onChange={handleChange}
-                                placeholder="Enter your email"
-                                className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            />
-                            <input
-                                type="password"
-                                name="password"
-                                value={form.password}
-                                onChange={handleChange}
-                                placeholder="Enter your password"
-                                className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            />
-                            <button
-                                type="submit"
-                                className="bg-green-400 text-white py-2 rounded hover:bg-green-700 transition duration-200"
-                            >
-                                Log In
-                            </button>
-
-                            <p className="text-sm text-center mt-2">
-                                Don't have an account?{' '}
-                                <button
-                                    type="button"
-                                    onClick={onSignupClick}
-                                    className="text-green-600 hover:underline font-medium"
-                                >
-                                    Click here
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </form>
-            )}
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
         </div>
     );
 }
