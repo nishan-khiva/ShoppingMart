@@ -1,7 +1,9 @@
+
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../Api/axiosInstance'
 const API_URL = import.meta.env.VITE_API_URL;
+import objectimg from '../assets/upload_area.png'
 
 const AddProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -21,32 +23,24 @@ const AddProduct = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
 
-  useEffect(() => {
-    // Fetch product data if editing
-    if (productId) {
-<<<<<<< HEAD:client/src/SellerPages/AddProduct.jsx
-      api.get(`/products/${productId}`).then((res) => {
-        const { productname, productdesc, productcategory, productprice, sellprice } = res.data;
-        setFormdata({ productname, productdesc, productcategory, productprice, sellprice });
-        setPreviewImage(`${API_URL}/uploads/${res.data.productimage}`);
-=======
-      axios.get(`https://shoppingmart-u430.onrender.com/products/${productId}`).then((res) => {
-        const { productname, productdesc, productcategory, productprice, sellprice } = res.data;
-        setFormdata({ productname, productdesc, productcategory, productprice, sellprice });
-        setPreviewImage(`https://shoppingmart-u430.onrender.com/uploads/${res.data.productimage}`);
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/AddProduct.jsx
-      }).catch(err => console.error("Failed to fetch product:", err));
-    }
+useEffect(() => {
+  // Fetch product data if editing
+  if (productId) {
+    api.get(`/products/${productId}`).then((res) => {
+      const { productname, productdesc, productcategory, productprice, sellprice } = res.data;
+      setFormdata({ productname, productdesc, productcategory, productprice, sellprice });
+      setPreviewImage(`${API_URL}/uploads/${res.data.productimage}`);
+    }).catch(err => console.error("Failed to fetch product:", err));
+  }
 
-    // ✅ Fetch category list for dropdown
-<<<<<<< HEAD:client/src/SellerPages/AddProduct.jsx
-    api.get('/categories')
-=======
-    axios.get('https://shoppingmart-u430.onrender.com/categories')
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/AddProduct.jsx
-      .then(res => setCategories(res.data))
-      .catch(err => console.error("Failed to fetch categories", err));
-  }, [productId]);
+  // ✅ Fetch category list for dropdown and set it
+  api.get('/categories')
+    .then((res) => {
+      setCategories(res.data); // <-- Add this line
+    })
+    .catch(err => console.error("Failed to fetch categories", err));
+}, [productId]);
+
 
   const handleChange = (e) => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
@@ -74,19 +68,12 @@ const AddProduct = () => {
     try {
       let response;
       if (productId) {
-<<<<<<< HEAD:client/src/SellerPages/AddProduct.jsx
         response = await api.put(`/products/${productId}`, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       } else {
         response = await api.post("/products/", data, {
-=======
-        response = await axios.put(`https://shoppingmart-u430.onrender.com/products/${productId}`, data, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
-      } else {
-        response = await axios.post("https://shoppingmart-u430.onrender.com/products/", data, {
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/AddProduct.jsx
+
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       }
@@ -184,7 +171,7 @@ const AddProduct = () => {
             <label htmlFor="fileInput">
               <div className=" border border-gray-300 rounded overflow-hidden cursor-pointer flex items-center justify-center">
                <img
-              src={previewImage || "/assets/upload_area.png"}
+              src={previewImage || objectimg}
               className='w-full h-full object-cover'
               alt="upload"
               />

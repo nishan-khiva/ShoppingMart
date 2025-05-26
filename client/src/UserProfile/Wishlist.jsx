@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useWishlist } from '../Context/WishlistContext';
 import { useCart } from '../Context/CartContext';
 import Swal from 'sweetalert2';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Wishlist = () => {
-    const { wishlist, toggleWishlist,fetchWishlist } = useWishlist();
+    const { wishlist, toggleWishlist } = useWishlist();
     const { addToCart } = useCart();
     const likedItems = Object.values(wishlist).filter(Boolean);
     
-    useEffect(() => {
-        fetchWishlist(); 
-      }, []);
+    // useEffect(() => {
+    //     fetchWishlist(); 
+    //   }, []);
     
 
     return (
@@ -35,7 +36,7 @@ const Wishlist = () => {
                                     )}
                                 </button>
                                 <img
-                                    src={`http://localhost:4000/uploads/${product.productimage}`}
+                                    src={`${API_URL}/uploads/${product.productimage}`}
                                     alt={product.productname}
                                     className='transition-transform duration-300 hover:scale-105 object-cover rounded'
                                 />

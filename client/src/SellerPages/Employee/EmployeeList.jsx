@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import axios from 'axios';
+import api from '../../Api/axiosInstance';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const EmployeeList = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const EmployeeList = () => {
   // Fetch all employees
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get('https://shoppingmart-u430.onrender.com/employees/');
+      const response = await api.get('/employees/');
       setEmployees(response.data);
       setLoading(false);
     } catch (error) {
@@ -30,7 +31,7 @@ const EmployeeList = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`https://shoppingmart-u430.onrender.com/employees/${id}`);
+      await api.delete(`/employees/${id}`);
       setEmployees((prev) => prev.filter((emp) => emp._id !== id)); 
     } catch (error) {
       console.error("Error deleting employee:", error);
@@ -68,7 +69,7 @@ const EmployeeList = () => {
               <tr key={employee._id} className="text-sm border-t hover:bg-gray-50">
                 <td className="px-4 py-2 border">
                   <img
-                    src={`https://shoppingmart-u430.onrender.com/uploads/${employee.image}`}
+                    src={`${API_URL}/uploads/${employee.image}`}
                     alt={employee.name}
                     style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '50%' }}
                   />

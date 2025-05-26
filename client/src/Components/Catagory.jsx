@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useProducts } from '../Context/ProductContext';
 const API_URL = import.meta.env.VITE_API_URL;
 const Catagory = () => {
-  const {categories, setCategories}= useProducts();
+  const { categories, setCategories } = useProducts();
 
   const bgColors = [
     'bg-red-200',
@@ -35,11 +35,7 @@ const Catagory = () => {
               className={`rounded-xl ${bgColors[index % bgColors.length]} flex flex-col items-center p-3 transition-shadow hover:shadow-md`}
             >
               <img
-<<<<<<< HEAD
                 src={`${API_URL}/${cat.image}`}
-=======
-                src={`http://localhost:4000/${cat.image}`}
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
                 className="h-[120px] sm:h-[140px] md:h-[150px] object-cover rounded-md transition-transform duration-300 hover:scale-105"
                 alt={cat.name}
               />

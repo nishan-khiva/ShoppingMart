@@ -12,12 +12,9 @@ const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-<<<<<<< HEAD
     const [menuOpen, setMenuOpen] = useState(false);
 
-=======
-    const [menuOpen, setMenuOpen] = useState(false); // <- For burger menu
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
+
     const { searchQuery, setSearchQuery } = useSearch();
     const { cartItems, clearCart } = useCart();
     const location = useLocation();
@@ -26,11 +23,8 @@ const Navbar = () => {
     const loginRef = useRef(null);
     const profileRef = useRef(null);
 
-<<<<<<< HEAD
     const hideNavbarRoutes = ['/seller-login', '/seller', '/seller/add-category', '/seller/product-list', '/seller/order-list', '/seller/employee-list'];
-=======
-    const hideNavbarRoutes = ['/seller-login'];
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
+
     const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
     const toggleLogin = () => {
@@ -82,11 +76,8 @@ const Navbar = () => {
         setShowLogin(false);
         setShowSign(false);
         setShowProfileDropdown(false);
-<<<<<<< HEAD
         setMenuOpen(false);
-=======
-        setMenuOpen(false); // close menu on route change
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
+
     }, [location.pathname]);
 
     const handleScroll = () => {
@@ -106,11 +97,8 @@ const Navbar = () => {
             {/* Brand */}
             <div className='font-bold text-lg sm:text-xl'>NishanMart</div>
 
-<<<<<<< HEAD
             {/* Search bar (only for normal users) */}
-=======
-            {/* Search bar (always visible) */}
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
+
             <div className="flex items-center gap-2 border rounded-2xl px-2 py-1 sm:ml-6">
                 <input
                     type="search"
@@ -127,7 +115,6 @@ const Navbar = () => {
                 />
                 <img src="/search_icon.svg" alt="Search Icon" className="w-5 h-5 cursor-pointer" onClick={handleSearch} />
             </div>
-<<<<<<< HEAD
             {/* )} */}
 
             {/* Normal menu */}
@@ -190,99 +177,16 @@ const Navbar = () => {
             </div>
 
             {/* Burger Button (only for normal users) */}
-=======
 
-            {/* Normal menu */}
-            <div className="hidden sm:flex items-center gap-4 sm:gap-6">
-
-                {!isSellerRoute ? (
-                    <>
-                        <Link to='/'><h3 className='text-sm sm:text-base'>Home</h3></Link>
-                        <Link to="/all-products"><h3 className='text-sm sm:text-base'>All Product</h3></Link>
-
-                        <Link to='/shoping' className='relative'>
-                            <img src="/nav_cart_icon.svg" alt="Cart" />
-                            {cartItems.length > 0 && (
-                                <span className="absolute -top-2 left-3 bg-green-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                                    {cartItems.length}
-                                </span>
-                            )}
-                        </Link>
-
-                        {isLoggedIn ? (
-                            <div className="relative" ref={profileRef}>
-                                <button
-                                    id="profile-button"
-                                    onClick={() => setShowProfileDropdown(prev => !prev)}
-                                    className='rounded-2xl text-sm font-semibold text-gray-800 hover:bg-gray-200 flex items-center gap-2'
-                                >
-                                    <FaUserCircle className="text-xl" />
-                                </button>
-                                {showProfileDropdown && (
-                                    <div className="absolute top-10 right-0 bg-white border rounded shadow-md w-36 z-50">
-                                        <ul className="text-sm">
-                                            <Link to="/myaccount">
-                                                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My Account</li>
-                                            </Link>
-                                            <li
-                                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                                onClick={() => {
-                                                    localStorage.removeItem('token');
-                                                    setIsLoggedIn(false);
-                                                    clearCart();
-                                                    navigate('/');
-                                                }}
-                                            >
-                                                Log Out
-                                            </li>
-                                        </ul>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <button
-                                onClick={toggleLogin}
-                                id="login-button"
-                                className='rounded-2xl py-1 px-3 bg-green-400 text-sm font-semibold text-white hover:bg-green-500'
-                            >
-                                LOG-IN
-                            </button>
-                        )}
-                    </>
-                ) : (
-                    <div className='text-xs sm:text-sm font-medium text-gray-600 flex gap-2 sm:gap-3'>
-                        Welcome, Seller 👋
-                        <button
-                            onClick={() => {
-                                localStorage.removeItem('isSellerLoggedIn');
-                                navigate('/seller-login');
-                            }}
-                            className='ml-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-xs sm:text-sm'
-                        >
-                            Logout
-                        </button>
-                    </div>
-                )}
-
-            </div>
-
-            {/* Burger Button */}
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
             <div className="sm:hidden flex items-center">
                 <button onClick={() => setMenuOpen(!menuOpen)}>
                     {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
                 </button>
             </div>
 
-<<<<<<< HEAD
             {/* Mobile Side Menu (only for normal users) */}
             {menuOpen && (
                 <div className="fixed top-0 right-0 w-2/3 h-screen bg-green-50 shadow-lg p-5 z-50 flex flex-col gap-6 text-sm animate-slide-in">
-=======
-            {/* Mobile Side Menu */}
-            {menuOpen && (
-                <div className="fixed top-0 right-0 w-2/3 h-100vh bg-green-50 shadow-lg p-5 z-50 flex flex-col gap-6 text-sm animate-slide-in">
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
                     <button
                         onClick={() => setMenuOpen(false)}
                         className="absolute top-5 right-5 text-xl text-gray-600"
@@ -297,10 +201,9 @@ const Navbar = () => {
                             {cartItems.length}
                         </span>
                     </Link>
-<<<<<<< HEAD
-=======
+
                       <Link to="/seller" onClick={() => setMenuOpen(false)}>Seller Dashboard</Link>
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
+
                     {isLoggedIn ? (
                         <>
                             <Link to="/myaccount" onClick={() => setMenuOpen(false)}>My Account</Link>
@@ -327,11 +230,7 @@ const Navbar = () => {
 
             {/* Login/Signup Popup */}
             {showLogin && (
-<<<<<<< HEAD
                 <div className='absolute top-[25vh] left-[5vw] sm:left-[35vw] z-50 w-[90vw] sm:w-auto ' ref={loginRef}>
-=======
-                <div className='absolute top-[25vh] left-[5vw] sm:left-[35vw] z-50 w-[90vw] sm:w-auto' ref={loginRef}>
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2
                     <Login
                         onSignupClick={handleSignupClick}
                         onLoginSuccess={handleLoginSuccess}

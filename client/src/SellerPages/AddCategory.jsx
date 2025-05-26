@@ -12,11 +12,8 @@ const AddCategory = () => {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-<<<<<<< HEAD:client/src/SellerPages/AddCategory.jsx
       const res = await api.get('/categories');
-=======
-      const res = await axios.get('https://shoppingmart-u430.onrender.com/categories');
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/AddCategory.jsx
+
       setCategories(res.data);
     } catch (err) {
       console.error(err);
@@ -44,19 +41,12 @@ const AddCategory = () => {
 
     try {
       if (editingId) {
-<<<<<<< HEAD:client/src/SellerPages/AddCategory.jsx
         await api.put(`/categories/${editingId}`, formData);
         toast.success("Category updated!");
         setEditingId(null);
       } else {
         await api.post('/categories', formData);
-=======
-        await axios.put(`https://shoppingmart-u430.onrender.com/categories/${editingId}`, formData);
-        toast.success("Category updated!");
-        setEditingId(null);
-      } else {
-        await axios.post('https://shoppingmart-u430.onrender.com/categories', formData);
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/AddCategory.jsx
+
         toast.success("Category added successfully!");
       }
       setCategoryName('');
@@ -71,11 +61,7 @@ const AddCategory = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
-<<<<<<< HEAD:client/src/SellerPages/AddCategory.jsx
         await api.delete(`/categories/${id}`);
-=======
-        await axios.delete(`https://shoppingmart-u430.onrender.com/categories/${id}`);
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/AddCategory.jsx
         toast.success("Category deleted!");
         fetchCategories();
       } catch (err) {
@@ -143,11 +129,7 @@ const AddCategory = () => {
                 <div className="flex items-center gap-4">
                   {cat.image && (
                     <img
-<<<<<<< HEAD:client/src/SellerPages/AddCategory.jsx
                       src={`${API_URL}/${cat.image}`}
-=======
-                      src={`https://shoppingmart-u430.onrender.com/${cat.image}`}
->>>>>>> 228af4e1b70531c6c8fff6514f7f5642713734d2:client/src/Pages/SellerPages/AddCategory.jsx
                       alt={cat.name}
                       className="w-12 h-12 object-cover rounded"
                     />

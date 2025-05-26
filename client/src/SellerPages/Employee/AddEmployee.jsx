@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import api from '../../Api/axiosInstance';
 
 const AddEmployee = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const employeeId = searchParams.get('id');
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -20,7 +21,7 @@ const AddEmployee = () => {
     if (employeeId) {
       const fetchEmployee = async () => {
         try {
-          const res = await axios.get(`https://shoppingmart-u430.onrender.com/employees/${employeeId}`);
+          const res = await api.get(`/employees/${employeeId}`);
           const data = res.data;
           setFormData({
             name: data.name,
@@ -71,12 +72,12 @@ const AddEmployee = () => {
 
     try {
       if (employeeId) {
-        await axios.put(`https://shoppingmart-u430.onrender.com/employees/${employeeId}`, formDataToSend, {
+        await api.put(`/employees/${employeeId}`, formDataToSend, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         alert('Employee updated successfully!');
       } else {
-        await axios.post('https://shoppingmart-u430.onrender.com/employees/', formDataToSend, {
+        await api.post('/employees/', formDataToSend, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         alert('Employee added successfully!');

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import axios from "axios";
+import api from '../Api/axiosInstance'
 import { Link, Outlet } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -10,7 +11,7 @@ const ProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("https://shoppingmart-u430.onrender.com/products/");
+      const res = await api.get("/products/");
       setProducts(res.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -22,7 +23,7 @@ const ProductList = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`https://shoppingmart-u430.onrender.com/products/${id}`);
+      await api.delete(`/products/${id}`);
       setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -60,7 +61,7 @@ const ProductList = () => {
               <tr key={product._id} className="text-sm border-t hover:bg-gray-50">
                 <td className="px-4 py-2 border">
                   <img
-                    src={`https://shoppingmart-u430.onrender.com/uploads/${product.productimage}`}
+                    src={`${API_URL}/uploads/${product.productimage}`}
                     alt={product.productname}
                     className="w-16 h-16 object-cover rounded"
                   />
