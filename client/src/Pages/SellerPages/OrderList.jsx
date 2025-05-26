@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
+import api from '../Api/axiosInstance'
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const [expandedOrderId, setExpandedOrderId] = useState(null);
+  
 
   useEffect(() => {
     fetchOrders();
@@ -11,7 +11,7 @@ const OrderList = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("https://shoppingmart-u430.onrender.com/api/orders/oder-list");
+      const res = await api.get("/api/orders/oder-list");
       setOrders(res.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -24,7 +24,7 @@ const OrderList = () => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      await axios.patch(`https://shoppingmart-u430.onrender.com/api/orders/${orderId}/status`, {
+      await api.patch(`/api/orders/${orderId}/status`, {
         status: newStatus,
       });
       fetchOrders(); // refresh orders
@@ -37,7 +37,7 @@ const OrderList = () => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
 
     try {
-      await axios.delete(`https://shoppingmart-u430.onrender.com/api/orders/${orderId}`);
+      await api.delete(`/api/orders/${orderId}`);
       fetchOrders(); // refresh orders
     } catch (error) {
       console.error("Failed to cancel order", error);
