@@ -13,7 +13,7 @@ const upload = require('../Middleware/upload');
 //     },
 // });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
 // Create Product
 // exports.createProduct = [
