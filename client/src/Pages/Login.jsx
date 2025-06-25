@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 const Login = ({ onSignupClick, onLoginSuccess }) => {
     const [form, setForm] = useState({
-        email: '',
-        password: ''
+        email: 'nishankhiva@gmail.com',
+        password: '1234'
     });
     const [loading, setLoading] = useState(false); // <-- New loading state
     const navigate = useNavigate();

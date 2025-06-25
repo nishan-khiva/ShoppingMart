@@ -16,7 +16,11 @@ const AllProducts = () => {
     const [filtered, setFiltered] = useState([]);
     const { addToCart } = useCart();
     const { wishlist, toggleWishlist } = useWishlist();
+<<<<<<< HEAD
     const navigate = useNavigate()
+=======
+
+>>>>>>> 4bc779ce80a2476948b24fe0e7f7bc5c32f57497
 
     useEffect(() => {
         const filteredItems = products.filter((item) =>
