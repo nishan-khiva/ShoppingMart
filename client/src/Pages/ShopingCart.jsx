@@ -87,13 +87,10 @@ const ShoppingCart = () => {
       contact: selectedAddress.phoneno,
       paymentMethod,
     };
-<<<<<<< HEAD
     if (paymentMethod === "Online Payment") {
       return Swal.fire('Redirecting', 'Please click the Pay Now button to proceed with online payment.', 'info');
     }
-=======
 
->>>>>>> 4bc779ce80a2476948b24fe0e7f7bc5c32f57497
     try {
       const token = localStorage.getItem('token');
       const res = await api.post('/api/orders/place', orderDetails, {
@@ -257,7 +254,6 @@ const ShoppingCart = () => {
                 <option value="Online Payment">Online Payment</option>
               </select>
 
-<<<<<<< HEAD
               {/* Show Instamojo Button if Online Payment selected */}
               {paymentMethod === 'Online Payment' && !orderPlaced && (
                 <div className="mt-4">
@@ -268,8 +264,6 @@ const ShoppingCart = () => {
                 </div>
               )}
 
-=======
->>>>>>> 4bc779ce80a2476948b24fe0e7f7bc5c32f57497
               {/* Products List */}
               <div>
                 <h3 className="font-bold mb-1">Products:</h3>
@@ -287,18 +281,15 @@ const ShoppingCart = () => {
                 <p className='font-bold'>Total: ₹{finalAmount.toFixed(2)}</p>
               </div>
 
-<<<<<<< HEAD
               {/* Place Order Button */}
               {paymentMethod === "Cash on Delivery" && (
                 <button type="submit" className="w-full py-2 bg-green-500 text-white rounded hover:bg-green-600">
                   Place Order
                 </button>
               )}
-=======
               <button type="submit" className="w-full py-2 bg-green-500 text-white rounded hover:bg-green-600">
                 Place Order
               </button>
->>>>>>> 4bc779ce80a2476948b24fe0e7f7bc5c32f57497
             </form>
 
           </div>
