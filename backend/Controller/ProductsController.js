@@ -1,26 +1,49 @@
 const Product = require('../Models/ProductSchema');
-const multer = require("multer");
-const path = require("path");
+// const multer = require("multer");
+// const path = require("path");
+const upload = require('../Middleware/upload');
 
-// Multer Storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/");
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
-    },
-});
+// // Multer Storage
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, "uploads/");
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, Date.now() + path.extname(file.originalname));
+//     },
+// });
 
 const upload = multer({ storage: storage });
 
 // Create Product
+// exports.createProduct = [
+//     upload.single("productimage"),
+//     async (req, res) => {
+//         try {
+//             const product = new Product({
+//                 productimage: req.file?.filename || "",
+//                 productname: req.body.productname,
+//                 productdesc: req.body.productdesc,
+//                 productcategory: req.body.productcategory,
+//                 productprice: req.body.productprice,
+//                 sellprice: req.body.sellprice,
+//             });
+
+//             const savedProduct = await product.save();
+//             res.status(201).json(savedProduct);
+//         } catch (error) {
+//             res.status(400).json({ error: error.message });
+//         }
+//     }
+// ];
+
+// Create Product
 exports.createProduct = [
-    upload.single("productimage"),
+    upload.single("productimage"), // this should match your frontend field name
     async (req, res) => {
         try {
             const product = new Product({
-                productimage: req.file?.filename || "",
+                productimage: req.file?.path || "",  // Cloudinary provides .path
                 productname: req.body.productname,
                 productdesc: req.body.productdesc,
                 productcategory: req.body.productcategory,
@@ -35,6 +58,7 @@ exports.createProduct = [
         }
     }
 ];
+
 // Get all products
 exports.getAllProducts = async (req, res) => {
     try {
