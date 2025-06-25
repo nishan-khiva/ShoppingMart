@@ -5,16 +5,10 @@ import { useProducts } from "../Context/ProductContext";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const BestSeller = () => {
-<<<<<<< HEAD
   const { addToCart } = useCart();
    const { bestproducts,setBestproducts } = useProducts();
 
  
-=======
- const { addToCart } = useCart();
- const { bestproducts,setBestproducts } = useProducts();
->>>>>>> 4bc779ce80a2476948b24fe0e7f7bc5c32f57497
-
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-18 py-6" id='best'>
       <h1 className="text-3xl font-semibold">Best Seller</h1>
