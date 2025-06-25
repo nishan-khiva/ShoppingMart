@@ -7,6 +7,7 @@ import { useSearch } from '../Context/SearchContext';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useWishlist } from '../Context/WishlistContext';
 import { useProducts } from "../Context/ProductContext";
+import { useNavigate } from 'react-router-dom';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const AllProducts = () => {
@@ -15,7 +16,7 @@ const AllProducts = () => {
     const [filtered, setFiltered] = useState([]);
     const { addToCart } = useCart();
     const { wishlist, toggleWishlist } = useWishlist();
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         const filteredItems = products.filter((item) =>
@@ -35,10 +36,17 @@ const AllProducts = () => {
                     {filtered.length === 0 ? (
                         <div className="text-center text-gray-500 text-lg py-10">No products found.</div>
                     ) : (
-                        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 py-2 '>
+                        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 py-3' >
+
                             {filtered.map((product) => (
-                                <div key={product._id} className='flex flex-col border border-gray-400 rounded p-3'>
-                                    <button onClick={() => toggleWishlist(product)}>
+                                <div key={product._id} className='flex flex-col border border-gray-400 rounded p-3 '
+                                    onClick={() => navigate(`/product-detail/${product._id}`)}>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // 
+                                            toggleWishlist(product);
+                                        }}
+                                    >
                                         {wishlist[product._id] ? (
                                             <AiFillHeart color="red" size={18} />
                                         ) : (
@@ -50,11 +58,11 @@ const AllProducts = () => {
                                         alt={product.productname}
                                         className='transition-transform duration-300 hover:scale-105 object-cover rounded w-full h-auto'
                                     />
-                                    <p className='opacity-40 text-xs sm:text-sm mt-2'>{product.productcategory}</p>
-                                    <h3 className='font-semibold text-sm sm:text-lg mt-2'>{product.productname}</h3>
+                                    <p className='opacity-40 text-xs sm:text-sm '>{product.productcategory}</p>
+                                    <h3 className='font-semibold text-sm sm:text-lg '>{product.productname}</h3>
 
                                     {/* Stars */}
-                                    <div className="flex gap-1 mt-1">
+                                    <div className="flex gap-1 mt-2">
                                         {[...Array(5)].map((_, i) => (
                                             <img
                                                 key={i}
@@ -66,11 +74,12 @@ const AllProducts = () => {
                                     </div>
 
                                     {/* Price & Button */}
-                                    <div className='flex gap-1 justify-between items-center mt-2'>
+                                    <div className='flex gap-1 justify-between items-center mt-1 '>
                                         <h2 className='text-green-600 font-semibold text-lg sm:text-xl'>₹{product.sellprice}</h2>
                                         <p className='line-through opacity-40 text-[12px] sm:text-[14px] mt-[2px]'>₹{product.productprice}</p>
                                         <button
-                                            onClick={() => {
+                                            onClick={(e) => {
+                                                e.stopPropagation();
                                                 const token = localStorage.getItem('token');
                                                 if (!token) {
                                                     Swal.fire({

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-
+import api from '../Api/axiosInstance';
 const WishlistContext = createContext();
 
 export const WishlistProvider = ({ children }) => {
@@ -12,7 +11,7 @@ export const WishlistProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (!token) return alert('Please login first');
   
-        await axios.post('http://localhost:4000/api/wishlist/toggle', {
+        await api.post('/api/wishlist/toggle', {
           productId: product._id,
         }, {
           headers: {
@@ -44,7 +43,7 @@ export const WishlistProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const res = await axios.get('http://localhost:4000/api/wishlist/', {
+      const res = await api.get('/api/wishlist/', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

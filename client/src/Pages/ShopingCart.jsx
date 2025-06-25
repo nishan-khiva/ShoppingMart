@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import empty from '../assets/emptyOrders.png';
 import AddressForm from '../UserProfile/AddressForm';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-
 const API_URL = import.meta.env.VITE_API_URL;
+import InstamojoButton from '../Components/PaymentBtn';
 
 const ShoppingCart = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart } = useCart();
@@ -86,7 +86,9 @@ const ShoppingCart = () => {
       contact: selectedAddress.phoneno,
       paymentMethod,
     };
-
+    if (paymentMethod === "Online Payment") {
+      return Swal.fire('Redirecting', 'Please click the Pay Now button to proceed with online payment.', 'info');
+    }
     try {
       const token = localStorage.getItem('token');
       const res = await api.post('/api/orders/place', orderDetails, {
@@ -250,6 +252,16 @@ const ShoppingCart = () => {
                 <option value="Online Payment">Online Payment</option>
               </select>
 
+              {/* Show Instamojo Button if Online Payment selected */}
+              {paymentMethod === 'Online Payment' && !orderPlaced && (
+                <div className="mt-4">
+                  <p className="text-sm text-gray-600 mb-2">
+                    Click below to proceed with Instamojo secure payment.
+                  </p>
+                  <InstamojoButton amount={finalAmount.toFixed(2)} />
+                </div>
+              )}
+
               {/* Products List */}
               <div>
                 <h3 className="font-bold mb-1">Products:</h3>
@@ -267,10 +279,14 @@ const ShoppingCart = () => {
                 <p className='font-bold'>Total: ₹{finalAmount.toFixed(2)}</p>
               </div>
 
-              <button type="submit" className="w-full py-2 bg-green-500 text-white rounded hover:bg-green-600">
-                Place Order
-              </button>
+              {/* Place Order Button */}
+              {paymentMethod === "Cash on Delivery" && (
+                <button type="submit" className="w-full py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                  Place Order
+                </button>
+              )}
             </form>
+
           </div>
         </div>
       )}

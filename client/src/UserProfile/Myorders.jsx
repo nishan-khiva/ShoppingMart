@@ -57,7 +57,7 @@ const Myorders = () => {
           </div>
         </div>
       ) : (
-        <div> 
+        <div>
           <table className="min-w-full border">
             <thead className="bg-gray-100 text-gray-700">
               <tr>

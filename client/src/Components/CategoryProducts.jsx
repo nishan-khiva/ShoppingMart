@@ -5,6 +5,7 @@ import { useCart } from '../Context/CartContext';
 import { useProducts } from '../Context/ProductContext';
 import Swal from 'sweetalert2';
 import Footer from './Footer';
+const API_URL = import.meta.env.VITE_API_URL
 
 const CategoryProducts = () => {
     const { categoryName } = useParams();
@@ -17,12 +18,6 @@ const CategoryProducts = () => {
             .then(res => setProducts(res.data))
             .catch(err => console.error("Error fetching products:", err));
     }, [categoryName]);
-
-    // useEffect(() => {
-    //     axios.get('http://localhost:4000/categories')
-    //         .then(res => setCategories(res.data))
-    //         .catch(err => console.error("Error fetching categories:", err));
-    // }, []);
 
     return (
         <>
@@ -38,10 +33,10 @@ const CategoryProducts = () => {
                                     key={cat._id}
                                     to={`/category/${cat.name}`}
                                     className={`flex-shrink-0 px-4 py-2 rounded-full text-sm border transition whitespace-nowrap
-                        ${cat.name === categoryName
+                                  ${cat.name === categoryName
                                             ? 'bg-green-600 text-white'
                                             : 'bg-gray-100 text-gray-700 hover:bg-green-200'}
-                    `}
+                              `}
                                 >
                                     {cat.name}
                                 </Link>
@@ -60,7 +55,7 @@ const CategoryProducts = () => {
                         {products.map(product => (
                             <div key={product._id} className='flex flex-col border border-gray-400 rounded p-3'>
                                 <img
-                                    src={`http://localhost:4000/uploads/${product.productimage}`}
+                                    src={`${API_URL}/uploads/${product.productimage}`}
                                     alt={product.productname}
                                     className='transition-transform duration-300 hover:scale-105 w-full h-auto   object-cover rounded'
 

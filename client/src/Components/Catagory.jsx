@@ -18,12 +18,6 @@ const Catagory = () => {
     'bg-orange-200'
   ];
 
-  // useEffect(() => {
-  //   api.get('/categories')
-  //     .then(res => setCategories(res.data))
-  //     .catch(err => console.error("Failed to fetch categories:", err));
-  // }, []);
-
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-16 py-6 sm:w-full sm:flex-wrap">
       <h1 className="text-2xl sm:text-3xl font-semibold mb-4">Categories</h1>

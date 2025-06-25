@@ -12,6 +12,8 @@ const employeeRoutes = require('./Router/EmployeeRoutes');
 const orderRoutes = require('./Router/OrderRoutes');
 const wishlistRoutes = require('./Router/WishlistRouter')
 const userAddressRoutes = require('./Router/UserAddressRouter')
+const reviewRoutes = require('./Router/ReviewRouter');
+const monthlySalesRoutes = require('./Router/MonthlySaleRouter'); // Monthly Sales Route
 
 const app = express();
 
@@ -36,6 +38,8 @@ app.use('/employees', employeeRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/address', userAddressRoutes);
+app.use('/api', reviewRoutes);
+app.use('/api', monthlySalesRoutes); // Monthly Sales Route
 
 // Default route
 app.get('/', (req, res) => {

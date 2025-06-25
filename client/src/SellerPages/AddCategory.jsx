@@ -78,7 +78,7 @@ const AddCategory = () => {
 
   return (
     <div className="w-full mx-auto p-4">
-      <div className="bg-white rounded shadow-md p-4 mt-[8vh] sm:mt-0">
+      <div className="bg-white rounded shadow-md p-4 mt-[4vh] sm:mt-0">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">
           {editingId ? 'Edit Category' : 'Add New Category'}
         </h2>

@@ -7,6 +7,7 @@ import Home from './Pages/Home';
 import Seller from './Pages/Seller';
 import ShoppingCart from './Pages/ShopingCart';
 import AllProducts from './Pages/AllProducts';
+import ProductDetails from './Pages/ProductDetails';
 
 // Seller Pages (Admin)
 import AddProduct from './SellerPages/AddProduct';
@@ -62,6 +63,7 @@ const App = () => {
                   <Route path="/all-products" element={<AllProducts />} />
                   <Route path="/shoping" element={<ShoppingCart />} />
                   <Route path="/category/:categoryName" element={<CategoryProducts />} />
+                  <Route path ="/product-detail/:id" element={<ProductDetails/>}/>
 
                   {/* Seller/Admin Routes */}
                   <Route path="/seller-login" element={<SellerLogin setIsSellerLoggedIn={setIsSellerLoggedIn} />} />
