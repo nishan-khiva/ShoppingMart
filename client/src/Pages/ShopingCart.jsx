@@ -8,7 +8,7 @@ import empty from '../assets/emptyOrders.png';
 import AddressForm from '../UserProfile/AddressForm';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 import InstamojoButton from '../Components/PaymentBtn';
 
 const ShoppingCart = () => {
@@ -111,6 +111,15 @@ const ShoppingCart = () => {
     setEditData(addressObj);
     setShowForm(true);
   };
+    const getImageUrl = (imagePath) => {
+    if (!imagePath) return "/no-image.png"; // fallback image
+    if (imagePath.startsWith("https://res.cloudinary.com")) {
+      return imagePath;
+    } else {
+      return `http://localhost:4000/uploads/${imagePath}`;
+    }
+  };
+
 
   return (
     <div className='relative mt-16'>
@@ -136,7 +145,11 @@ const ShoppingCart = () => {
             {cartItems.map(item => (
               <div key={item._id} className='grid grid-cols-3 items-center gap-32 border-b pb-3 mb-3'>
                 <div className='flex gap-4 items-center'>
-                  <img src={`${API_URL}/uploads/${item.productimage}`} className='w-16 h-16 rounded object-cover' />
+                  <img
+                    // src={`${API_URL}/uploads/${item.productimage}`} 
+                    src={getImageUrl(item.productimage)}
+
+                    className='w-16 h-16 rounded object-cover' />
                   <div>
                     <h3 className='font-semibold'>{item.productname}</h3>
                     <div className='flex items-center gap-2 mt-1'>
