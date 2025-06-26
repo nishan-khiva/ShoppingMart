@@ -2,13 +2,21 @@ import React from 'react';
 import { useCart } from '../Context/CartContext';
 import Swal from 'sweetalert2';
 import { useProducts } from "../Context/ProductContext";
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 const BestSeller = () => {
   const { addToCart } = useCart();
-   const { bestproducts,setBestproducts } = useProducts();
+  const { bestproducts, setBestproducts } = useProducts();
+console.log("best", bestproducts);
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "/no-image.png"; // fallback image
+    if (imagePath.startsWith("https://res.cloudinary.com")) {
+      return imagePath;
+    } else {
+      return `http://localhost:4000/uploads/${imagePath}`;
+    }
+  };
 
- 
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-18 py-6" id='best'>
       <h1 className="text-3xl font-semibold">Best Seller</h1>
@@ -18,7 +26,8 @@ const BestSeller = () => {
           <div key={product._id} className="flex flex-col border border-gray-400 rounded p-3">
 
             <img
-              src={`${API_URL}/uploads/${product.productimage}`}
+              // src={`${API_URL}/uploads/${product.productimage}`}
+              src={getImageUrl(product.productimage)}
               alt={product.productname}
               className="transition-transform duration-300 hover:scale-105 object-contain h-[150px] w-full"
             />
