@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../Api/axiosInstance'
 import toast from 'react-hot-toast';
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 const AddCategory = () => {
   const [categoryName, setCategoryName] = useState('');
@@ -129,7 +129,8 @@ const AddCategory = () => {
                 <div className="flex items-center gap-4">
                   {cat.image && (
                     <img
-                      src={`${API_URL}/${cat.image}`}
+                      // src={`${API_URL}/${cat.image}`}
+                      src={cat.image}
                       alt={cat.name}
                       className="w-12 h-12 object-cover rounded"
                     />

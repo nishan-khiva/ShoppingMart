@@ -5,7 +5,7 @@ import { useCart } from '../Context/CartContext';
 import { useProducts } from '../Context/ProductContext';
 import Swal from 'sweetalert2';
 import Footer from './Footer';
-const API_URL = import.meta.env.VITE_API_URL
+// const API_URL = import.meta.env.VITE_API_URL
 
 const CategoryProducts = () => {
     const { categoryName } = useParams();
@@ -18,6 +18,15 @@ const CategoryProducts = () => {
             .then(res => setProducts(res.data))
             .catch(err => console.error("Error fetching products:", err));
     }, [categoryName]);
+
+    const getImageUrl = (imagePath) => {
+        if (!imagePath) return "/no-image.png"; // fallback image
+        if (imagePath.startsWith("https://res.cloudinary.com")) {
+            return imagePath;
+        } else {
+            return `http://localhost:4000/uploads/${imagePath}`;
+        }
+    };
 
     return (
         <>
@@ -55,7 +64,8 @@ const CategoryProducts = () => {
                         {products.map(product => (
                             <div key={product._id} className='flex flex-col border border-gray-400 rounded p-3'>
                                 <img
-                                    src={`${API_URL}/uploads/${product.productimage}`}
+                                    // src={`${API_URL}/uploads/${product.productimage}`}
+                                    src={getImageUrl(product.productimage)}
                                     alt={product.productname}
                                     className='transition-transform duration-300 hover:scale-105 w-full h-auto   object-cover rounded'
 

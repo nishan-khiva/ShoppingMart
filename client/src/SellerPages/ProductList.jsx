@@ -4,12 +4,12 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import api from '../Api/axiosInstance';
 import { Link, Outlet } from 'react-router-dom';
 import { useProducts } from "../Context/ProductContext";
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 const ProductList = () => {
-  const { products, setProducts,  loading } = useProducts();
+  const { products, setProducts, loading } = useProducts();
   // const [products, setProducts] = useState([]);
-  
+
   // No need to call fetchProducts again
   if (loading) return <p>Loading...</p>;
 
@@ -50,6 +50,14 @@ const ProductList = () => {
       console.error("Error toggling bestseller:", error);
     }
   };
+    const getImageUrl = (imagePath) => {
+        if (!imagePath) return "/no-image.png"; // fallback image
+        if (imagePath.startsWith("https://res.cloudinary.com")) {
+            return imagePath;
+        } else {
+            return `http://localhost:4000/uploads/${imagePath}`;
+        }
+    };
 
 
   // useEffect(() => {
@@ -94,7 +102,8 @@ const ProductList = () => {
               <tr key={product._id} className="text-sm border-t hover:bg-gray-50">
                 <td className="px-4 py-3 border">
                   <img
-                    src={`${API_URL}/uploads/${product.productimage}`}
+                    // src={`${API_URL}/uploads/${product.productimage}`}
+                    src={getImageUrl(product.productimage)}
                     alt={product.productname}
                     className="w-16 h-16 object-cover rounded"
                   />

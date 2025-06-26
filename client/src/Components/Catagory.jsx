@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../Context/ProductContext';
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 const Catagory = () => {
   const { categories, setCategories } = useProducts();
 
@@ -29,7 +29,8 @@ const Catagory = () => {
               className={`rounded-xl ${bgColors[index % bgColors.length]} flex flex-col items-center p-3 transition-shadow hover:shadow-md`}
             >
               <img
-                src={`${API_URL}/${cat.image}`}
+                // src={`${API_URL}/${cat.image}`}
+                src={cat.image}
                 className="h-[120px] sm:h-[140px] md:h-[150px] object-cover rounded-md transition-transform duration-300 hover:scale-105"
                 alt={cat.name}
               />
