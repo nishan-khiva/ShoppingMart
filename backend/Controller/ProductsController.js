@@ -1,63 +1,42 @@
 const Product = require('../Models/ProductSchema');
-// const multer = require("multer");
-// const path = require("path");
-const upload = require('../Middleware/upload');
-
-// // Multer Storage
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, "uploads/");
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, Date.now() + path.extname(file.originalname));
-//     },
-// });
-
-// const upload = multer({ storage: storage });
+const upload = require('../Middleware/upload'); 
 
 // Create Product
-// exports.createProduct = [
-//     upload.single("productimage"),
-//     async (req, res) => {
-//         try {
-//             const product = new Product({
-//                 productimage: req.file?.filename || "",
-//                 productname: req.body.productname,
-//                 productdesc: req.body.productdesc,
-//                 productcategory: req.body.productcategory,
-//                 productprice: req.body.productprice,
-//                 sellprice: req.body.sellprice,
-//             });
+exports.createProduct = async (req, res) => {
+  try {
+    const {
+      productname,
+      productdesc,
+      productcategory,
+      productprice,
+      sellprice
+    } = req.body;
 
-//             const savedProduct = await product.save();
-//             res.status(201).json(savedProduct);
-//         } catch (error) {
-//             res.status(400).json({ error: error.message });
-//         }
-//     }
-// ];
+    // 📦 Multi-field file access like 'photo' and 'signature'
+    const file = req.files['productimage'] ? req.files['productimage'][0].path : "";
 
-// Create Product
-exports.createProduct = [
-    upload.single("productimage"), // this should match your frontend field name
-    async (req, res) => {
-        try {
-            const product = new Product({
-                productimage: req.file?.path || "",  // Cloudinary provides .path
-                productname: req.body.productname,
-                productdesc: req.body.productdesc,
-                productcategory: req.body.productcategory,
-                productprice: req.body.productprice,
-                sellprice: req.body.sellprice,
-            });
+    // 🔧 Product model instance
+    const product = new Product({
+      productimage: file,
+      productname,
+      productdesc,
+      productcategory,
+      productprice,
+      sellprice,
+    });
 
-            const savedProduct = await product.save();
-            res.status(201).json(savedProduct);
-        } catch (error) {
-            res.status(400).json({ error: error.message });
-        }
-    }
-];
+    // 💾 Save to DB
+    const savedProduct = await product.save();
+
+    // ✅ Response
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    console.error("Product creation error:", error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -113,35 +92,45 @@ exports.toggleBestSeller = async (req, res) => {
 
 // Update a product
 exports.updateProduct = [
-    upload.single("productimage"),
-    async (req, res) => {
-        try {
-            const updateData = {
-                productname: req.body.productname,
-                productdesc: req.body.productdesc,
-                productcategory: req.body.productcategory,
-                productprice: req.body.productprice,
-                sellprice: req.body.sellprice,
-            };
+  upload.fields([{ name: 'productimage', maxCount: 1 }]),  // 🔁 Changed from single to fields
+  async (req, res) => {
+    try {
+      const {
+        productname,
+        productdesc,
+        productcategory,
+        productprice,
+        sellprice
+      } = req.body;
 
-            if (req.file) {
-                updateData.productimage = req.file.filename;
-            }
+      const updateData = {
+        productname,
+        productdesc,
+        productcategory,
+        productprice,
+        sellprice,
+      };
 
-            const updatedProduct = await Product.findByIdAndUpdate(
-                req.params.id,
-                updateData,
-                { new: true }
-            );
+      // 👇 Image from Cloudinary or file system
+      if (req.files && req.files['productimage']) {
+        updateData.productimage = req.files['productimage'][0].path;
+      }
 
-            if (!updatedProduct)
-                return res.status(404).json({ message: "Product not found" });
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        updateData,
+        { new: true }
+      );
 
-            res.status(200).json(updatedProduct);
-        } catch (error) {
-            res.status(400).json({ error: error.message });
-        }
+      if (!updatedProduct)
+        return res.status(404).json({ message: "Product not found" });
+
+      res.status(200).json(updatedProduct);
+    } catch (error) {
+      console.error("Update error:", error);
+      res.status(400).json({ error: error.message });
     }
+  }
 ];
 
 

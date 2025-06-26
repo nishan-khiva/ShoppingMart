@@ -100,7 +100,7 @@ useEffect(() => {
 
  
   return (
-    <div className='px-3'>
+    <div className='px-3 py-4'>
       <form onSubmit={handleSubmit}>
         <div className='flex gap-6'>
           <div>
