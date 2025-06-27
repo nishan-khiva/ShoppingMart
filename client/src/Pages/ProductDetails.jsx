@@ -4,7 +4,7 @@ import api from '../Api/axiosInstance';
 import { useCart } from '../Context/CartContext';
 import Swal from 'sweetalert2';
 
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -71,8 +71,16 @@ const ProductDetails = () => {
             navigate('/shoping');
         }
     };
-
+ const getImageUrl = (imagePath) => {
+        if (!imagePath) return "/no-image.png"; // fallback image
+        if (imagePath.startsWith("https://res.cloudinary.com")) {
+            return imagePath;
+        } else {
+            return `http://localhost:4000/uploads/${imagePath}`;
+        }
+    };
     if (!product) return <div className="text-center mt-20 text-lg">Loading...</div>;
+    
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-20 mt-10 bg-gray-100 py-10">
@@ -80,7 +88,8 @@ const ProductDetails = () => {
                 {/* Product Image */}
                 <div className="w-full">
                     <img
-                        src={`${API_URL}/uploads/${product.productimage}`}
+                {/* src={`${API_URL}/uploads/${product.productimage}`} */}
+                    src={getImageUrl(product.productimage)}
                         alt={product.productname}
                         className=" h-auto rounded-lg shadow border border-gray-400   "
                     />
