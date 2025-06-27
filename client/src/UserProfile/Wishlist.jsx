@@ -3,16 +3,13 @@ import { useWishlist } from '../Context/WishlistContext';
 import { useCart } from '../Context/CartContext';
 import Swal from 'sweetalert2';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-// const API_URL = import.meta.env.VITE_API_URL;
 
 const Wishlist = () => {
     const { wishlist, toggleWishlist } = useWishlist();
     const { addToCart } = useCart();
     const likedItems = Object.values(wishlist).filter(Boolean);
     
-    // useEffect(() => {
-    //     fetchWishlist(); 
-    //   }, []);
+   
 
      const getImageUrl = (imagePath) => {
         if (!imagePath) return "/no-image.png"; // fallback image
@@ -44,7 +41,6 @@ const Wishlist = () => {
                                     )}
                                 </button>
                                 <img
-{/*                                     src={`${API_URL}/uploads/${product.productimage}`} */}
                                     src={getImageUrl(product.productimage)}
                                     alt={product.productname}
                                     className='transition-transform duration-300 hover:scale-105 object-cover rounded'
