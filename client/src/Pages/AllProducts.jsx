@@ -17,7 +17,6 @@ const AllProducts = () => {
     const { addToCart } = useCart();
     const { wishlist, toggleWishlist } = useWishlist();
     const navigate = useNavigate()
-    console.log("Products:", products);
 
     useEffect(() => {
         const filteredItems = products.filter((item) =>
