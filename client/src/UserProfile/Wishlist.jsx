@@ -3,7 +3,7 @@ import { useWishlist } from '../Context/WishlistContext';
 import { useCart } from '../Context/CartContext';
 import Swal from 'sweetalert2';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 const Wishlist = () => {
     const { wishlist, toggleWishlist } = useWishlist();
@@ -13,7 +13,15 @@ const Wishlist = () => {
     // useEffect(() => {
     //     fetchWishlist(); 
     //   }, []);
-    
+
+     const getImageUrl = (imagePath) => {
+        if (!imagePath) return "/no-image.png"; // fallback image
+        if (imagePath.startsWith("https://res.cloudinary.com")) {
+            return imagePath;
+        } else {
+            return `http://localhost:4000/uploads/${imagePath}`;
+        }
+    };
 
     return (
         <div>
@@ -36,7 +44,8 @@ const Wishlist = () => {
                                     )}
                                 </button>
                                 <img
-                                    src={`${API_URL}/uploads/${product.productimage}`}
+{/*                                     src={`${API_URL}/uploads/${product.productimage}`} */}
+                                    src={getImageUrl(product.productimage)}
                                     alt={product.productname}
                                     className='transition-transform duration-300 hover:scale-105 object-cover rounded'
                                 />
