@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../Api/axiosInstance'
+import api from '../Api/axiosInstance';
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
@@ -9,17 +9,17 @@ const OrderList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await api.get("/api/orders/all-oder");
+        setOrders(res.data.orders);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
     fetchOrders();
   }, []);
-
-  const fetchOrders = async () => {
-    try {
-      const res = await api.get("/api/orders/all-oder");
-      setOrders(res.data.orders);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    }
-  };
 
   const handleViewDetails = (orderId) => {
     navigate('/seller/full-details', { state: { orderId } });
@@ -27,27 +27,32 @@ const OrderList = () => {
 
   const filteredOrders = orders.filter((order) => {
     const matchesStatus = filterStatus === "All" || order.status === filterStatus;
-    const matchesSearch = order.orderId.toLowerCase().includes(searchTerm.toLowerCase());
+ const matchesSearch = (order.orderId || "").toLowerCase().includes(searchTerm.toLowerCase());
+
     return matchesStatus && matchesSearch;
   });
 
+  const statusColors = {
+    Delivered: "text-green-700",
+    Pending: "text-yellow-700",
+    Shipped: "text-blue-700",
+    Cancelled: "text-red-700",
+    Processing: "text-gray-700",
+  };
 
   return (
     <div className="p-6">
-      <div className='flex justify-between'>
-        <h2 className="text-2xl font-semibold mb-4">Order List</h2>
-        {/* 🔍 Search Input */}
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Search by Order ID"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="border px-3 py-1 rounded  focus:outline-none focus:ring-2 focus:ring-green-400"
-          />
-        </div>
+      {/* Header and Search */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-semibold">Order List</h2>
+        <input
+          type="text"
+          placeholder="Search by Order ID"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border px-3 py-1 rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
       </div>
-
 
       {/* Filter Buttons */}
       <div className="flex gap-3 mb-6">
@@ -55,10 +60,9 @@ const OrderList = () => {
           <button
             key={status}
             onClick={() => setFilterStatus(status)}
-            className={`px-4 py-1 rounded-full text-sm font-medium ${filterStatus === status
-              ? "bg-green-500 text-white"
-              : "bg-gray-200 text-gray-700"
-              }`}
+            className={`px-4 py-1 rounded-full text-sm font-medium ${
+              filterStatus === status ? "bg-green-500 text-white" : "bg-gray-200 text-gray-700"
+            }`}
           >
             {status}
           </button>
@@ -66,8 +70,8 @@ const OrderList = () => {
       </div>
 
       {/* Orders Table */}
-      <div>
-        <table className="min-w-full bg-white rounded shadow-md overflow-x-auto">
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white rounded shadow-md">
           <thead className="bg-gray-100">
             <tr>
               <th className="py-2 px-4 text-left border">Order ID</th>
@@ -83,7 +87,7 @@ const OrderList = () => {
               filteredOrders.map((order) => (
                 <tr
                   key={order._id}
-                  className="border-t hover:bg-gray-50 cursor-pointer align-top"
+                  className="border-t hover:bg-gray-50 cursor-pointer"
                 >
                   <td className="py-2 px-4 border">
                     <button
@@ -103,19 +107,9 @@ const OrderList = () => {
                   <td className="py-2 px-4 font-semibold border">
                     ₹{order.finalAmount.toFixed(2)}
                   </td>
-                  <td className={`py-2 px-4 border text-sm font-medium 
-                 ${order.status === "Delivered"
-                      ? "text-green-700"
-                      : order.status === "Pending"
-                        ? "text-yellow-700"
-                        : order.status === "Shipped"
-                          ? " text-blue-700"
-                          : order.status === "Cancelled"
-                            ? " text-red-700"
-                            : "text-gray-600"
-                    }
-                 `}>
-                    {order.status}</td>
+                  <td className={`py-2 px-4 border text-sm font-medium ${statusColors[order.status] || "text-gray-600"}`}>
+                    {order.status}
+                  </td>
                 </tr>
               ))
             ) : (
