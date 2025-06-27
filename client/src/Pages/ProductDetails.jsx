@@ -4,7 +4,7 @@ import api from '../Api/axiosInstance';
 import { useCart } from '../Context/CartContext';
 import Swal from 'sweetalert2';
 
-// const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -88,7 +88,6 @@ const ProductDetails = () => {
                 {/* Product Image */}
                 <div className="w-full">
                     <img
-                {/* src={`${API_URL}/uploads/${product.productimage}`} */}
                     src={getImageUrl(product.productimage)}
                         alt={product.productname}
                         className=" h-auto rounded-lg shadow border border-gray-400   "
