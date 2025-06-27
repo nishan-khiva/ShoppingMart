@@ -7,6 +7,7 @@ import { useProducts } from "../Context/ProductContext";
 const BestSeller = () => {
   const { addToCart } = useCart();
   const { bestproducts, setBestproducts } = useProducts();
+  
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "/no-image.png"; // fallback image
     if (imagePath.startsWith("https://res.cloudinary.com")) {
