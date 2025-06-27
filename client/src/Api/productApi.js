@@ -2,7 +2,6 @@ import api from "./axiosInstance";
 //Get All produt list
 export const fetchProducts = async () => {
   const response = await api.get("/products");
-  console.log("hello", response.data);
   return response.data;
 };
 
