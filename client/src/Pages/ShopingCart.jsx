@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import empty from '../assets/emptyOrders.png';
 import AddressForm from '../UserProfile/AddressForm';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-
 // const API_URL = import.meta.env.VITE_API_URL;
 import InstamojoButton from '../Components/PaymentBtn';
 
@@ -90,7 +89,6 @@ const ShoppingCart = () => {
     if (paymentMethod === "Online Payment") {
       return Swal.fire('Redirecting', 'Please click the Pay Now button to proceed with online payment.', 'info');
     }
-
     try {
       const token = localStorage.getItem('token');
       const res = await api.post('/api/orders/place', orderDetails, {
@@ -111,7 +109,7 @@ const ShoppingCart = () => {
     setEditData(addressObj);
     setShowForm(true);
   };
-    const getImageUrl = (imagePath) => {
+  const getImageUrl = (imagePath) => {
     if (!imagePath) return "/no-image.png"; // fallback image
     if (imagePath.startsWith("https://res.cloudinary.com")) {
       return imagePath;
@@ -148,7 +146,6 @@ const ShoppingCart = () => {
                   <img
                     // src={`${API_URL}/uploads/${item.productimage}`} 
                     src={getImageUrl(item.productimage)}
-
                     className='w-16 h-16 rounded object-cover' />
                   <div>
                     <h3 className='font-semibold'>{item.productname}</h3>
@@ -300,9 +297,6 @@ const ShoppingCart = () => {
                   Place Order
                 </button>
               )}
-              <button type="submit" className="w-full py-2 bg-green-500 text-white rounded hover:bg-green-600">
-                Place Order
-              </button>
             </form>
 
           </div>
