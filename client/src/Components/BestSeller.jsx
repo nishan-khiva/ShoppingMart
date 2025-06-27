@@ -2,7 +2,6 @@ import React from 'react';
 import { useCart } from '../Context/CartContext';
 import Swal from 'sweetalert2';
 import { useProducts } from "../Context/ProductContext";
-// const API_URL = import.meta.env.VITE_API_URL;
 
 const BestSeller = () => {
   const { addToCart } = useCart();
@@ -26,7 +25,6 @@ const BestSeller = () => {
           <div key={product._id} className="flex flex-col border border-gray-400 rounded p-3">
 
             <img
-              // src={`${API_URL}/uploads/${product.productimage}`}
               src={getImageUrl(product.productimage)}
               alt={product.productname}
               className="transition-transform duration-300 hover:scale-105 object-contain h-[150px] w-full"
