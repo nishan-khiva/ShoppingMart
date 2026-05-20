@@ -95,7 +95,7 @@ const Navbar = () => {
             ${isScrolled ? 'bg-white shadow-md border-b border-gray-300' : 'bg-white/80 backdrop-blur-sm border-b border-gray-200'}`}>
 
             {/* Brand */}
-            <div className='font-bold text-lg sm:text-xl'>NishanMart</div>
+            <div className='font-bold text-lg sm:text-xl'>GreenMart</div>
 
             {/* Search bar (only for normal users) */}
 

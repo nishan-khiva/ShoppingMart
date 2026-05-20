@@ -45,7 +45,7 @@ export default function SellerNavbar() {
         ${isScrolled ? 'bg-white shadow-md border-b border-gray-300' : 'bg-white/80 backdrop-blur-sm border-b border-gray-200'}`}>
 
         {/* Left logo/title */}
-        <div className='font-bold text-lg sm:text-xl'>NishanMart</div>
+        <div className='font-bold text-lg sm:text-xl'>GreenMart</div>
 
         {/* Right Profile Dropdown */}
         <div className="relative" ref={dropdownRef}>

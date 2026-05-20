@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="bg-green-100 mt-[16vh]">
             <div className="flex flex-col md:flex-row py-10 px-4 md:justify-between gap-10 md:gap-0">
                 <div className="md:w-[30vw]">
-                    <h1 className="text-2xl font-semibold">NishanMart</h1>
+                    <h1 className="text-2xl font-semibold">GreenMart</h1>
                     <p className="font-semibold opacity-50 mt-2">
                         We deliver fresh groceries and snacks straight to your door. Trusted by thousands, we aim to make your shopping experience simple and affordable.
                     </p>
